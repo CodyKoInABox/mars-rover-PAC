@@ -1,3 +1,6 @@
 # mars-rover-PAC
 
-escrever coisas aqui depois...
+### nao estou conseguindo acessar meu github no momento entao fiz esse temporario para hospedar esse exercicio
+
+
+Versao original do mars-rover: https://codykoinabox.github.io/mars-rover/
