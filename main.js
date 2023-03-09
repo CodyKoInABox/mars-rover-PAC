@@ -41,6 +41,9 @@ function mapClick(tileID){
 }
 
 function defineObjective(tileID){
+    if (obstaclesID.includes(tileID)){
+        undefineObstacles(tileID);
+     }
     document.getElementById(tileID).style.background = "#7dff7d";
     objective = new coordinates()
     objective.x = tileID.match(/\d/g)[0];
