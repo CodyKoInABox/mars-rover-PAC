@@ -1,0 +1,19 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: hsl(231, 14%, 10%);
+}
+.mapContainer{
+    margin: auto;
+    display: grid;
+    width: fit-content;
+    grid-template-rows: 50px 50px 50px 50px 50px 50px 50px 50px;
+    grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px;
+}
+.mapTile{
+    background-color: white;
+}
+.mapTile:hover{
+    background-color: hsl(0, 0%, 90%);
+    cursor: pointer;
+}
