@@ -10,10 +10,12 @@ body{
     grid-template-rows: 50px 50px 50px 50px 50px 50px 50px 50px;
     grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px;
 }
+.mapContainer:hover{
+    cursor: pointer;
+}
 .mapTile{
     background-color: white;
 }
 .mapTile:hover{
     background-color: hsl(0, 0%, 90%);
-    cursor: pointer;
 }
