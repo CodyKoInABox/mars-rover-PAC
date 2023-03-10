@@ -91,5 +91,23 @@ function undefineStart(tileID){
 }
 
 function buttonClick(){
-    console.log("This button does nothing =)")
+   
+
+    //pretty much the H score
+    let startObj = {
+        x: start.match(/\d/g)[0],
+        y: start.match(/\d/g)[1]
+    }
+    let objectiveObj = {
+        x: objective.match(/\d/g)[0],
+        y: objective.match(/\d/g)[1]
+    }
+    let distanceStartObjective = {
+        x: (Math.max(startObj.x, objectiveObj.x) - Math.min(startObj.x, objectiveObj.x)),
+        y: (Math.max(startObj.y, objectiveObj.y) - Math.min(startObj.y, objectiveObj.y)),
+    }
+
+    let distance = Math.sqrt(Math.pow(distanceStartObjective.x, 2) + Math.pow(distanceStartObjective.y, 2));
+
+    console.log("Distance = ", distance);
 }
