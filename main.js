@@ -12,7 +12,7 @@ let obstacles = [];
 mapContainer.addEventListener('contextmenu', e => e.preventDefault());
 
 mapContainer.addEventListener('mousedown', e => {
-    mapClick(e.target.id)
+    mapClick(e.target.id);
 })
 
 
