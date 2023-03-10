@@ -40,11 +40,11 @@ function mapClick(tileID){
 }
 
 function defineObjective(tileID){
-    if (obstacles.includes(tileID)){
-        undefineObstacles(tileID);
-     }
-     else if(start == tileID){
+     if(start == tileID){
         undefineStart(tileID);
+     }
+     else if (obstacles.includes(tileID)){
+        undefineObstacles(tileID);
      }
     document.getElementById(tileID).style.background = "#7dff7d";
     objective = tileID;
@@ -72,6 +72,9 @@ function undefineObstacles(tileID){
 function defineStart(tileID){
     if(tileID == objective){
         undefineObjective(tileID);
+    }
+    else if(obstacles.includes(tileID)){
+        undefineObstacles(tileID);
     }
     document.getElementById(tileID).style.background = "#ffa9f8";
     start = tileID;
