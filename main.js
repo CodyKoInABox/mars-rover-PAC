@@ -1,4 +1,7 @@
-
+// TODO LIST
+// ADD COMMENTS
+// DON'T FORGET
+// !!!!!!!!!!!!
 
 const mapContainer = document.querySelector(".mapContainer");
 
