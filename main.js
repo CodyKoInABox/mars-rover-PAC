@@ -18,7 +18,7 @@ mapContainer.addEventListener('mousedown', e => {
     mapClick(e.target.id);
 })
 
-
+//maybe change this to: left mouse = add / right mouse = remove (?)
 function mapClick(tileID){
     console.log("Selected tile =", tileID)
 
