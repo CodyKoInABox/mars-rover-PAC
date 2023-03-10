@@ -3,6 +3,7 @@
 const mapContainer = document.querySelector(".mapContainer");
 
 let objective;
+let start;
 let obstacles = [];
 
 
@@ -17,8 +18,14 @@ mapContainer.addEventListener('mousedown', e => {
 
 function mapClick(tileID){
     console.log("Selected tile =", tileID)
-    
-    if(objective == undefined){
+
+    if(start == undefined){
+        defineStart(tileID);
+    }
+    else if(start == tileID){
+        undefineStart(tileID);
+    }
+    else if(objective == undefined){
         defineObjective(tileID);
     }
     else if(tileID.match(/\d/g)[0] == objective.match(/\d/g)[0] && tileID.match(/\d/g)[1] == objective.match(/\d/g)[1]){
@@ -35,6 +42,9 @@ function mapClick(tileID){
 function defineObjective(tileID){
     if (obstacles.includes(tileID)){
         undefineObstacles(tileID);
+     }
+     else if(start == tileID){
+        undefineStart(tileID);
      }
     document.getElementById(tileID).style.background = "#7dff7d";
     objective = tileID;
@@ -57,4 +67,19 @@ function undefineObstacles(tileID){
     document.getElementById(tileID).style.background = "white";
     obstacles.splice(obstacles.indexOf(tileID), 1);
     console.log("Obstacle Removed!")
+}
+
+function defineStart(tileID){
+    if(tileID == objective){
+        undefineObjective(tileID);
+    }
+    document.getElementById(tileID).style.background = "#ffa9f8";
+    start = tileID;
+    console.log("New Start =", start);
+}
+
+function undefineStart(tileID){
+    document.getElementById(tileID).style.background = "white";
+    start = undefined;
+    console.log("Start Removed");
 }
