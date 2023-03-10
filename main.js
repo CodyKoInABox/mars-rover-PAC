@@ -93,6 +93,7 @@ function undefineStart(tileID){
 function buttonClick(){
    
 
+    try{
     //pretty much the H score
     let startObj = {
         x: start.match(/\d/g)[0],
@@ -110,4 +111,9 @@ function buttonClick(){
     let distance = Math.sqrt(Math.pow(distanceStartObjective.x, 2) + Math.pow(distanceStartObjective.y, 2));
 
     console.log("Distance = ", distance);
+    }
+    catch(err){
+        console.log("ERROR: Start and Objetive are not defined");
+        //console.log(err);
+    }
 }
