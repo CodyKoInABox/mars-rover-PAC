@@ -89,3 +89,7 @@ function undefineStart(tileID){
     start = undefined;
     console.log("Start Removed");
 }
+
+function buttonClick(){
+    console.log("This button does nothing =)")
+}
