@@ -16,7 +16,7 @@ mapContainer.addEventListener('mousedown', e => {
 
 
 function mapClick(tileID){
-    console.log("tileID=", tileID)
+    console.log("Selected tile =", tileID)
     
     if(objective == undefined){
         defineObjective(tileID);
