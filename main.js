@@ -217,10 +217,16 @@ function aStar(){
         //current = node in open list with lowest f score
         current = open[0];
         for(let i = 1; i < open.length; i++){
-            if(open[i].fScore < current.fScore || open[i].fScore == current.fScore && open[i].hScore < current.hScore){
+            if(parseInt(open[i].fScore) < parseInt(current.fScore) || parseInt(open[i].fScore) == parseInt(current.fScore) && parseInt(open[i].hScore) < parseInt(current.hScore)){
                 current = open[i];
+                console.log("New Fscore =", current.fScore);
             }
+            console.log("Old Fscore =", current.fScore);
+            
         }
+
+        //set the current g score
+        current.gScore = gScore;
 
         //COLORS FOR TESTING
         try{
@@ -249,20 +255,23 @@ function aStar(){
         //will get all 4 neighbors to the current node
         getNeighbors(current);
         //will return only the valid neighbors
-        testNeighbors();
-
+        // testNeighbors();
+       //testing inside loop because the testNeighbors function isnt working
 
         //for each neighbour of current
         for(let j = 0; j < neighbors.length; j++){
+            if(obstacles.includes(neighbors[j].id) || neighbors[j].x > 8 || neighbors[j].x <= 0 || neighbors[j].y > 8 || neighbors[j].y <= 0){
+                continue; 
+            }
             if(closed.includes(neighbors[j])){
                 continue;
             }
 
             let movementCostToNeighbor = current.gScore + 1;
             if(movementCostToNeighbor < neighbors.gScore || !open.includes(neighbors[j])){
-                neighbors[j].hScore = manhattanDistance(neighbors[j], objectiveObj);
-                neighbors[j].gScore = movementCostToNeighbor;
-                neighbors[j].fScore = neighbors[j].hScore + neighbors[j].gScore;
+                neighbors[j].hScore = parseInt(manhattanDistance(neighbors[j], objectiveObj));
+                neighbors[j].gScore = parseInt(movementCostToNeighbor);
+                neighbors[j].fScore = parseInt(parseInt(neighbors[j].hScore) + parseInt(neighbors[j].gScore));
                 neighbors[j].cameFromX = current.x;
                 neighbors[j].cameFromY = current.y;
                 neighbors[j].cameFromId = current.id;
@@ -286,25 +295,43 @@ let neighbors = [];
 
 function getNeighbors(current){
 
-    //neighbor top
-    neighbors.push(new tile(current.x, current.y+1, current.x, current.y) );
+    //neighbor below
+    neighbors.push(new tile(current.x, parseInt(current.y)+1, current.x, current.y) );
 
-    //neighbor bottom
-    neighbors.push(new tile(current.x, current.y-1, current.x, current.y) );
+    //neighbor above
+    neighbors.push(new tile(current.x, parseInt(current.y)-1, current.x, current.y) );
 
-    //neighbor right
-    neighbors.push(new tile(current.x+1, current.y, current.x, current.y) );
+    //neighbor to the right
+    neighbors.push(new tile(parseInt(current.x)+1, current.y, current.x, current.y) );
 
-    //neighbor left
-    neighbors.push(new tile(current.x-1, current.y, current.x, current.y) );
+    //neighbor to the left
+    neighbors.push(new tile(parseInt(current.x)-1, current.y, current.x, current.y) );
 }
 
 //will return only valid neighbors
 function testNeighbors(){
-    for(i=0; i < neighbors.length; i++){
+    let tempLength = neighbors.length
+    let neighborsToSplice = [];
+    for(let i=0; i < tempLength; i++){
+        console.log("loop=", i)
+        console.log(neighbors[i].x)
         //is neighbor is obstacle or outside the grid
-        if(obstacles.includes(neighbors[i].id) || neighbors[i].x > 8 || neighbors[i].x < 0 || neighbors[i].y > 8 || neighbors[i].y < 0){
-            neighbors.splice(neighbors.indexOf(neighbors[i]));
+
+        if(obstacles.includes(neighbors[i].id) || neighbors[i].x > 8 || neighbors[i].x <= 0 || neighbors[i].y > 8 || neighbors[i].y <= 0){
+            console.log("splice")
+        //    neighbors.splice(neighbors.indexOf(neighbors[i]));
+              neighborsToSplice.push(i);
+        }
+    }
+    //splice
+    console.log(neighborsToSplice)
+    for(let l = 0; l < neighborsToSplice.length; l++){
+        console.log("spliceLOOP", l);
+        if(l == 0){
+            neighbors.splice(neighborsToSplice[l], 1);
+        }
+        else{
+            neighbors.splice(neighborsToSplice[l - l - 1], 1);
         }
     }
 }
