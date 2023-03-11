@@ -219,6 +219,8 @@ function aStar(){
     //loop
     while(open.length > 0){
 
+        //THIS IS THE BROKEN PART, IT KEEPS LOOPING WAYYYY TO MANY TIMES
+        //it seems like having two obstacles on the path makes the open list increase in size non-stop
         //current = node in open list with lowest f score
         current = open[0];
         for(let i = 1; i < open.length; i++){
@@ -226,8 +228,8 @@ function aStar(){
                 current = open[i];
                 console.log("New Fscore =", current.fScore);
             }
-            console.log("Old Fscore =", current.fScore);
-            
+            else{console.log("Old Fscore =", current.fScore);}
+            console.log("Length of open list=", open.length);
         }
 
         //set the current g score
