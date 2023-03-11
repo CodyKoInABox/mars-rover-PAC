@@ -2,6 +2,7 @@ body{
     margin: 0;
     padding: 0;
     background-color: hsl(231, 14%, 10%);
+    text-align: center;
 }
 .mapContainer{
     margin: auto;
@@ -25,6 +26,17 @@ body{
     justify-content: center;
     margin-top: 75px;
 }
+.button{
+    font-weight: bolder;
+    font-size: large;
+    height: 50px;
+}
 .button:hover{
     cursor: pointer;
+    background-color: rgb(255, 172, 172);
+    border: transparent;
+}
+.aviso{
+    font-family: Arial;
+    color: white;
 }

@@ -190,6 +190,9 @@ function buttonClick(){
     let distance = distanceStartObjective.x + distanceStartObjective.y;
 
     console.log("Distance = ", distance);
+    console.log("TALVEZ DE MUITO LAG AGORA");
+
+          aStar();
     }
 
 
