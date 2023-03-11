@@ -198,6 +198,8 @@ function buttonClick(){
 
     let current;
 
+    let tempColorValue = 30;
+
 function aStar(){
     //list of nodes to check for neighbors
     let open = [];
@@ -233,10 +235,12 @@ function aStar(){
 
         //COLORS FOR TESTING
         try{
-            document.getElementById(current.id).style.background = 'blue';
+            let tempColor = 'hsl(240, 100%,' + tempColorValue + '%)'
+            document.getElementById(current.id).style.background = tempColor;
+            tempColorValue += 3;
         }
-        catch{
-            console.log("");
+        catch(err){
+            console.log(err);
         }
         
         
@@ -270,13 +274,13 @@ function aStar(){
                 continue;
             }
 
-            let movementCostToNeighbor = current.gScore + 1;
-            if(movementCostToNeighbor < neighbors.gScore || !open.includes(neighbors[j])){
+            let movementCostToNeighbor = parseInt(current.gScore) + 1;
+            if(movementCostToNeighbor < parseInt(neighbors.gScore) || !open.includes(neighbors[j])){
                 neighbors[j].hScore = parseInt(manhattanDistance(neighbors[j], objectiveObj));
                 neighbors[j].gScore = parseInt(movementCostToNeighbor);
                 neighbors[j].fScore = parseInt(parseInt(neighbors[j].hScore) + parseInt(neighbors[j].gScore));
-                neighbors[j].cameFromX = current.x;
-                neighbors[j].cameFromY = current.y;
+                neighbors[j].cameFromX = parseInt(current.x);
+                neighbors[j].cameFromY = parseInt(current.y);
                 neighbors[j].cameFromId = current.id;
                 if(!open.includes(neighbors[j])){
                     open.push(neighbors[j]);
@@ -341,5 +345,5 @@ function testNeighbors(){
 
 //will return the manhattan distance between two nodes
 function manhattanDistance(node1, node2){
-    return (Math.max(node1.x, node2.x) - Math.min(node1.x, node2.x)) + (Math.max(node1.y, node2.y) - Math.min(node1.y, node2.y))
+    return (Math.max(parseInt(node1.x), parseInt(node2.x)) - Math.min(parseInt(node1.x), parseInt(node2.x))) + (Math.max(parseInt(node1.y), parseInt(node2.y)) - Math.min(parseInt(node1.y), parseInt(node2.y)))
 }
