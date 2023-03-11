@@ -143,31 +143,173 @@ function undefineStart(tileID){
 }
 
 
+//tile constructor
+class tile{
+    constructor(x, y, cameFromX, camefromY, gScore){
+        //position on X axis
+        this.x = parseInt(x),
+        //position on Y axis
+        this.y = parseInt(y),
+        //div ID
+        this.id = 'x' + parseInt(x) + 'y' + parseInt(y),
+        //position of parent on X axis
+        this.cameFromX = parseInt(cameFromX),
+        //position of parent on Y axis
+        this.cameFromY = parseInt(camefromY),
+        //id of parent
+        this.cameFromId = 'x' + parseInt(cameFromX) + 'y' + parseInt(camefromY);
+        //h score
+        this.hScore;
+        //g score
+        this.gScore = parseInt(gScore);
+        //f score
+        this.fScore;
+    }
+}
+
+let startObj;
+let objectiveObj;
+
 //temporary function for the HTML button click, i'm just using this to test and figure out stuff, mainly about the A* pathfinder algorithm
 function buttonClick(){
-   
 
-    try{
-    //pretty much the H score
-    let startObj = {
-        x: start.match(/\d/g)[0],
-        y: start.match(/\d/g)[1]
-    }
-    let objectiveObj = {
-        x: objective.match(/\d/g)[0],
-        y: objective.match(/\d/g)[1]
-    }
+
+    //create tile object for start
+    startObj = new tile(start.match(/\d/g)[0], start.match(/\d/g)[1]);  
+
+    //create tile object for objective
+    objectiveObj = new tile(objective.match(/\d/g)[0], objective.match(/\d/g)[1]);
+
+
     let distanceStartObjective = {
         x: (Math.max(startObj.x, objectiveObj.x) - Math.min(startObj.x, objectiveObj.x)),
         y: (Math.max(startObj.y, objectiveObj.y) - Math.min(startObj.y, objectiveObj.y)),
     }
 
-    let distance = Math.sqrt(Math.pow(distanceStartObjective.x, 2) + Math.pow(distanceStartObjective.y, 2));
+    //manhattan distance
+    let distance = distanceStartObjective.x + distanceStartObjective.y;
 
     console.log("Distance = ", distance);
     }
-    catch(err){
-        console.log("ERROR: Start and Objetive are not defined");
-        //console.log(err);
+
+
+    let current;
+
+function aStar(){
+    //list of nodes to check for neighbors
+    let open = [];
+    
+    //list of nodes already checked for neighbors
+    let closed = [];
+
+    //add startObj to the open list
+    open.push(startObj);
+
+    //current node
+    current = new tile();
+
+    //g score
+    let gScore = 0;
+    
+    //loop
+    while(open.length > 0){
+
+        //current = node in open list with lowest f score
+        current = open[0];
+        for(let i = 1; i < open.length; i++){
+            if(open[i].fScore < current.fScore || open[i].fScore == current.fScore && open[i].hScore < current.hScore){
+                current = open[i];
+            }
+        }
+
+        //COLORS FOR TESTING
+        try{
+            document.getElementById(current.id).style.background = 'blue';
+        }
+        catch{
+            console.log("");
+        }
+        
+        
+
+
+
+        //remove current from open
+        open.splice(open.indexOf(current), 1);
+
+        //add current to closed
+        closed.push(current);
+
+       if(current.x == objectiveObj.x && current.y == objectiveObj.y){
+           //SUCESS
+           console.log("SUCESS");
+           return;
+       }
+
+        //will get all 4 neighbors to the current node
+        getNeighbors(current);
+        //will return only the valid neighbors
+        testNeighbors();
+
+
+        //for each neighbour of current
+        for(let j = 0; j < neighbors.length; j++){
+            if(closed.includes(neighbors[j])){
+                continue;
+            }
+
+            let movementCostToNeighbor = current.gScore + 1;
+            if(movementCostToNeighbor < neighbors.gScore || !open.includes(neighbors[j])){
+                neighbors[j].hScore = manhattanDistance(neighbors[j], objectiveObj);
+                neighbors[j].gScore = movementCostToNeighbor;
+                neighbors[j].fScore = neighbors[j].hScore + neighbors[j].gScore;
+                neighbors[j].cameFromX = current.x;
+                neighbors[j].cameFromY = current.y;
+                neighbors[j].cameFromId = current.id;
+                if(!open.includes(neighbors[j])){
+                    open.push(neighbors[j]);
+                }
+            }
+        }
+
+
+
+
+
+        //add 1 to the gScore
+        gScore++;
     }
+
+}
+
+let neighbors = [];
+
+function getNeighbors(current){
+
+    //neighbor top
+    neighbors.push(new tile(current.x, current.y+1, current.x, current.y) );
+
+    //neighbor bottom
+    neighbors.push(new tile(current.x, current.y-1, current.x, current.y) );
+
+    //neighbor right
+    neighbors.push(new tile(current.x+1, current.y, current.x, current.y) );
+
+    //neighbor left
+    neighbors.push(new tile(current.x-1, current.y, current.x, current.y) );
+}
+
+//will return only valid neighbors
+function testNeighbors(){
+    for(i=0; i < neighbors.length; i++){
+        //is neighbor is obstacle or outside the grid
+        if(obstacles.includes(neighbors[i].id) || neighbors[i].x > 8 || neighbors[i].x < 0 || neighbors[i].y > 8 || neighbors[i].y < 0){
+            neighbors.splice(neighbors.indexOf(neighbors[i]));
+        }
+    }
+}
+
+//will return the manhattan distance between two nodes
+function manhattanDistance(node1, node2){
+    return (Math.max(node1.x, node2.x) - Math.min(node1.x, node2.x)) + (Math.max(node1.y, node2.y) - Math.min(node1.y, node2.y))
 }
