@@ -225,6 +225,8 @@ function aStar(){
         //it might help idk
         //current = node in open list with lowest f score
         current = open[0];
+        console.log("open set=", open);
+        console.log("close set=", closed)
         for(let i = 1; i < open.length; i++){
             if(parseInt(open[i].fScore) < parseInt(current.fScore) || parseInt(open[i].fScore) == parseInt(current.fScore) && parseInt(open[i].hScore) < parseInt(current.hScore)){
                 current = open[i];
@@ -232,6 +234,7 @@ function aStar(){
             }
             else{console.log("Old Fscore =", current.fScore);}
             console.log("Length of open list=", open.length);
+            console.log("Length of closed list=", closed.length);
         }
 
         //set the current g score
@@ -271,10 +274,8 @@ function aStar(){
 
         //for each neighbour of current
         for(let j = 0; j < neighbors.length; j++){
-            if(obstacles.includes(neighbors[j].id) || neighbors[j].x > 8 || neighbors[j].x <= 0 || neighbors[j].y > 8 || neighbors[j].y <= 0){
-                continue; 
-            }
             if(closed.includes(neighbors[j])){
+                console.log("neighbor is on closed set")
                 continue;
             }
 
@@ -305,18 +306,71 @@ function aStar(){
 let neighbors = [];
 
 function getNeighbors(current){
+    neighbors = [];
 
     //neighbor below
-    neighbors.push(new tile(current.x, parseInt(current.y)+1, current.x, current.y) );
+    let neighborBelow = new tile(current.x, parseInt(current.y)+1, current.x, current.y);
+    if(!obstacles.includes(neighborBelow.id)){
+        console.log("NOT OBSTACLE");
+        if(isOnGrid(neighborBelow.x, neighborBelow.y) == true){
+            console.log("NOT OUTSIDE GRID");
+            console.log("isOnGrid for", neighborBelow.id, isOnGrid(neighborBelow.x, neighborBelow.y))
+        console.log("Pushing neighbor:", neighborBelow.id)
+        neighbors.push(neighborBelow);
+        }
+    }
+
 
     //neighbor above
-    neighbors.push(new tile(current.x, parseInt(current.y)-1, current.x, current.y) );
+    let neighborAbove = new tile(current.x, parseInt(current.y)-1, current.x, current.y);
+    if(!obstacles.includes(neighborAbove.id)){
+        console.log("NOT OBSTACLE");
+        if(isOnGrid(neighborAbove.x, neighborAbove.y) == true){
+            console.log("NOT OUTSIDE GRID");
+        console.log("Pushing neighbor:", neighborAbove.id)
+        neighbors.push(neighborAbove);
+    }
+    }
 
     //neighbor to the right
-    neighbors.push(new tile(parseInt(current.x)+1, current.y, current.x, current.y) );
+    let neighborRight = new tile(parseInt(current.x)+1, current.y, current.x, current.y);
+    if(!obstacles.includes(neighborRight.id)){
+        console.log("NOT OBSTACLE");
+        if(isOnGrid(neighborRight.x, neighborRight.y) == true){
+            console.log("NOT OUTSIDE GRID");
+        console.log("Pushing neighbor:", neighborRight.id)
+        neighbors.push(neighborRight);
+        }
+    }
 
     //neighbor to the left
-    neighbors.push(new tile(parseInt(current.x)-1, current.y, current.x, current.y) );
+    let neighborLeft = new tile(parseInt(current.x)-1, current.y, current.x, current.y);
+    if(!obstacles.includes(neighborLeft.id)){
+        console.log("NOT OBSTACLE");
+        if(isOnGrid(neighborLeft.x, neighborLeft.y) == true){
+            console.log("NOT OUTSIDE GRID");
+        console.log("Pushing neighbor:", neighborLeft.id)
+        neighbors.push(neighborLeft);
+        }
+    }
+
+    neighborBelow = undefined;
+    neighborAbove = undefined;
+    neighborRight = undefined;
+    neighborLeft = undefined;
+
+}
+
+function isOnGrid(x, y){
+    console.log("IS ON GRID INPUT X =", x);
+    console.log("IS ON GRID INPUT Y =", y);
+
+    if( x > 0 && x < 9 && y > 0 && y < 9){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
 //will return only valid neighbors
