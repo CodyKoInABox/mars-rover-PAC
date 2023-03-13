@@ -145,7 +145,7 @@ function undefineStart(tileID){
 //constructor for the Node object
 //REMEMBER TO ALWAYS PASS A GSCORE AND HSCORE WHEN CREATING AN OBJECT
 class Node {
-    constructor(x, y, camefromX, cameFromY, gScore, hScore) {
+    constructor(x, y, camefromX, cameFromY, gScore, hScore, parent) {
         this.x = x;
         this.y = y;
         this.id = "x" + x + "y" + y;
@@ -155,6 +155,7 @@ class Node {
         this.gScore = gScore;
         this.hScore = hScore;
         this.fScore = gScore + hScore;
+        this.parent = parent;
     }
 }
 
@@ -208,11 +209,12 @@ function aStar(){
 
         if(current.id == objective){
             console.log("SUCCESS! OBJECTIVE FOUND!!!");
-            console.log(open);
+            path = retracePath(startObj, closed[closed.length-1]);
+            drawPath(path);
             return;
         }
 
-        document.getElementById(current.id).style.background = "blue";
+        
         console.log("open length =", open.length, "    ", "closed length =", closed.length);
 
         let neighbors = getNeighbors(current, objectiveObj);
@@ -263,25 +265,25 @@ function getManhattanDistance(firstX, firstY, secondX, secondY){
 function getNeighbors(current, objectiveObj){
     let neighbors = [];
     //get neighbor top
-    let neighborTop = new Node(current.x, current.y-1, current.x, current.y, current.gScore+1, getManhattanDistance(current.x, current.y-1, objectiveObj.x, objectiveObj.y));
+    let neighborTop = new Node(current.x, current.y-1, current.x, current.y, current.gScore+1, getManhattanDistance(current.x, current.y-1, objectiveObj.x, objectiveObj.y), current);
     if(testNeighbor(neighborTop) == 1){
         neighbors.push(neighborTop);
     }
 
     //get neighbor botton
-    let neighborBottom = new Node(current.x, current.y+1, current.x, current.y, current.gScore+1, getManhattanDistance(current.x, current.y+1, objectiveObj.x, objectiveObj.y));
+    let neighborBottom = new Node(current.x, current.y+1, current.x, current.y, current.gScore+1, getManhattanDistance(current.x, current.y+1, objectiveObj.x, objectiveObj.y), current);
     if(testNeighbor(neighborBottom) == 1){
         neighbors.push(neighborBottom);
     }
 
     //get neighbor right
-    let neighborRight = new Node(current.x+1, current.y, current.x, current.y, current.gScore+1, getManhattanDistance(current.x+1, current.y, objectiveObj.x, objectiveObj.y));
+    let neighborRight = new Node(current.x+1, current.y, current.x, current.y, current.gScore+1, getManhattanDistance(current.x+1, current.y, objectiveObj.x, objectiveObj.y), current);
     if(testNeighbor(neighborRight) == 1){
         neighbors.push(neighborRight);
     }
 
     //get neighbor left
-    let neighborLeft = new Node(current.x-1, current.y, current.x, current.y, current.gScore+1, getManhattanDistance(current.x-1, current.y, objectiveObj.x, objectiveObj.y));
+    let neighborLeft = new Node(current.x-1, current.y, current.x, current.y, current.gScore+1, getManhattanDistance(current.x-1, current.y, objectiveObj.x, objectiveObj.y), current);
     if(testNeighbor(neighborLeft) == 1){
         neighbors.push(neighborLeft);
     }
@@ -304,5 +306,26 @@ function testNeighbor(neighbor){
     }
     else{
         return 0;
+    }
+}
+
+function retracePath(startNode, endNode){
+    let path = [];
+
+    let currentNode = endNode;
+
+    
+    
+    while(currentNode.id != startNode.id){
+        path.push(currentNode.id);
+        currentNode = currentNode.parent;  
+    }
+
+    return path;
+}
+
+function drawPath(path){
+    for(let i = 1; i < path.length; i++){
+        document.getElementById(path[i]).style.background = "aqua";
     }
 }
