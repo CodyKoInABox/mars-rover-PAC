@@ -198,7 +198,7 @@ function aStar(){
         //find node in the open set with the lowest f score
         current = open[0];
         for(let i = 1; i < open.length; i++){
-            if(open[i].fScore < current.fScore || open[i].fScore == current.fScore && open[i].hScore < current.hScore){
+            if(open[i].fScore < current.fScore || open[i].fScore == current.fScore && open[i].gScore < current.gScore){
                 current = open[i];
             }
         }
