@@ -33,8 +33,6 @@ body{
 }
 .button:hover{
     cursor: pointer;
-    background-color: rgb(255, 172, 172);
-    border: transparent;
 }
 .aviso{
     font-family: Arial;
