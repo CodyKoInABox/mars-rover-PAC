@@ -142,266 +142,167 @@ function undefineStart(tileID){
     console.log("Start Removed");
 }
 
-
-//tile constructor
-class tile{
-    constructor(x, y, cameFromX, camefromY, gScore){
-        //position on X axis
-        this.x = parseInt(x),
-        //position on Y axis
-        this.y = parseInt(y),
-        //div ID
-        this.id = 'x' + parseInt(x) + 'y' + parseInt(y),
-        //position of parent on X axis
-        this.cameFromX = parseInt(cameFromX),
-        //position of parent on Y axis
-        this.cameFromY = parseInt(camefromY),
-        //id of parent
-        this.cameFromId = 'x' + parseInt(cameFromX) + 'y' + parseInt(camefromY);
-        //h score
-        this.hScore;
-        //g score
-        this.gScore = parseInt(gScore);
-        //f score
-        this.fScore;
+//constructor for the Node object
+//REMEMBER TO ALWAYS PASS A GSCORE AND HSCORE WHEN CREATING AN OBJECT
+class Node {
+    constructor(x, y, camefromX, cameFromY, gScore, hScore) {
+        this.x = x;
+        this.y = y;
+        this.id = "x" + x + "y" + y;
+        this.camefromX = camefromX;
+        this.cameFromY = cameFromY;
+        this.cameFromId = "x" + camefromX + "y" + cameFromY;
+        this.gScore = gScore;
+        this.hScore = hScore;
+        this.fScore = gScore + hScore;
     }
 }
 
-let startObj;
-let objectiveObj;
+
 
 //temporary function for the HTML button click, i'm just using this to test and figure out stuff, mainly about the A* pathfinder algorithm
 function buttonClick(){
 
+    aStar();
 
-    //create tile object for start
-    startObj = new tile(start.match(/\d/g)[0], start.match(/\d/g)[1]);  
-
-    //create tile object for objective
-    objectiveObj = new tile(objective.match(/\d/g)[0], objective.match(/\d/g)[1]);
+}
 
 
-    let distanceStartObjective = {
-        x: (Math.max(startObj.x, objectiveObj.x) - Math.min(startObj.x, objectiveObj.x)),
-        y: (Math.max(startObj.y, objectiveObj.y) - Math.min(startObj.y, objectiveObj.y)),
-    }
-
-    //manhattan distance
-    let distance = distanceStartObjective.x + distanceStartObjective.y;
-
-    console.log("Distance = ", distance);
-    console.log("TALVEZ DE MUITO LAG AGORA");
-
-          aStar();
-    }
-
-
-    let current;
-
-    let tempColorValue = 30;
-
+//A* pathfinding algorithm
 function aStar(){
-    //list of nodes to check for neighbors
+
+
+    //create a current node;
+    let current = new Node;
+
+    //create a node object for the objective position 
+    let objectiveObj = new Node(parseInt(objective.match(/\d/g)[0]), parseInt(objective.match(/\d/g)[1]));
+
+    //create a node object for the start position
+    let startObj = new Node(parseInt(start.match(/\d/g)[0]), parseInt(start.match(/\d/g)[1]), undefined, undefined, 0, getManhattanDistance(parseInt(start.match(/\d/g)[0]), parseInt(start.match(/\d/g)[1]), objectiveObj.x, objectiveObj.y));
+    
+
+    //create the open set
     let open = [];
     
-    //list of nodes already checked for neighbors
+    //create the closed set
     let closed = [];
 
-    //add startObj to the open list
+    //add the start node to open
     open.push(startObj);
 
-    //current node
-    current = new tile();
 
-    //g score
-    let gScore = 0;
-    
-    //loop
     while(open.length > 0){
 
-        //THIS IS THE BROKEN PART, IT KEEPS LOOPING WAYYYY TO MANY TIMES
-        //it seems like having two obstacles on the path makes the open list increase in size non-stop
-        //INCLUDE NEIGHBOR TEST INSIDE GET NEIGHBOR FUNCTION AND REMOVE IT FROM THE MAIN A* FUNCTION
-        //it might help idk
-        //current = node in open list with lowest f score
+        //find node in the open set with the lowest f score
         current = open[0];
-        console.log("open set=", open);
-        console.log("close set=", closed)
         for(let i = 1; i < open.length; i++){
-            if(parseInt(open[i].fScore) < parseInt(current.fScore) || parseInt(open[i].fScore) == parseInt(current.fScore) && parseInt(open[i].hScore) < parseInt(current.hScore)){
+            if(open[i].fScore < current.fScore || open[i].fScore == current.fScore && open[i].hScore < current.hScore){
                 current = open[i];
-                console.log("New Fscore =", current.fScore);
             }
-            else{console.log("Old Fscore =", current.fScore);}
-            console.log("Length of open list=", open.length);
-            console.log("Length of closed list=", closed.length);
         }
 
-        //set the current g score
-        current.gScore = gScore;
 
-        //COLORS FOR TESTING
-        try{
-            let tempColor = 'hsl(240, 100%,' + tempColorValue + '%)'
-            document.getElementById(current.id).style.background = tempColor;
-            tempColorValue += 3;
-        }
-        catch(err){
-            console.log(err);
-        }
-        
-        
-
-
-
-        //remove current from open
         open.splice(open.indexOf(current), 1);
-
-        //add current to closed
         closed.push(current);
 
-       if(current.x == objectiveObj.x && current.y == objectiveObj.y){
-           //SUCESS
-           console.log("SUCESS");
-           return;
-       }
+        if(current.id == objective){
+            console.log("SUCCESS! OBJECTIVE FOUND!!!");
+            console.log(open);
+            return;
+        }
 
-        //will get all 4 neighbors to the current node
-        getNeighbors(current);
-        //will return only the valid neighbors
-        // testNeighbors();
-       //testing inside loop because the testNeighbors function isnt working
+        document.getElementById(current.id).style.background = "blue";
+        console.log("open length =", open.length, "    ", "closed length =", closed.length);
 
-        //for each neighbour of current
+        let neighbors = getNeighbors(current, objectiveObj);
+        
+        //for each neighbor
         for(let j = 0; j < neighbors.length; j++){
+            //if neighbor is in the closed set, skip it
             if(closed.includes(neighbors[j])){
-                console.log("neighbor is on closed set")
                 continue;
             }
 
-            let movementCostToNeighbor = parseInt(current.gScore) + 1;
-            if(movementCostToNeighbor < parseInt(neighbors.gScore) || !open.includes(neighbors[j])){
-                neighbors[j].hScore = parseInt(manhattanDistance(neighbors[j], objectiveObj));
-                neighbors[j].gScore = parseInt(movementCostToNeighbor);
-                neighbors[j].fScore = parseInt(parseInt(neighbors[j].hScore) + parseInt(neighbors[j].gScore));
-                neighbors[j].cameFromX = parseInt(current.x);
-                neighbors[j].cameFromY = parseInt(current.y);
-                neighbors[j].cameFromId = current.id;
-                if(!open.includes(neighbors[j])){
-                    open.push(neighbors[j]);
+            let newGScore = current.gScore + 1;
+            let newHScore = getManhattanDistance(neighbors[j].x, neighbors[j].y, objectiveObj.x, objectiveObj.y);
+
+            if(newGScore < neighbors[j].gScore || !open.includes(neighbors[j])){
+                neighbors[j].gScore = newGScore;
+                neighbors[j].hScore = newHScore;
+                neighbors[j].fScore = newGScore + newHScore;
+
+                //if neighbor is NOT in the open set, add it to it
+                //looks like this is the broken part
+                let currentNeighbor = neighbors[j];
+                console.log("current neighbor for open test = ", currentNeighbor);
+                
+                console.log("current element id=", currentNeighbor.id);
+                console.log(open.some(open => open.id == currentNeighbor.id))
+
+                if(open.some(open => open.id == currentNeighbor.id) == true){
+                    console.log("OPEN INCLUDES CURRENT NEIGHBOR");
+                }
+                else{
+                    
+                    console.log("OPEN DOES NOT INCLUDE CURRENT NEIGHBOR");
+                    open.push(currentNeighbor);
                 }
             }
         }
 
-
-
-
-
-        //add 1 to the gScore
-        gScore++;
     }
-
 }
 
-let neighbors = [];
+//function that returns the manhattan distance between two nodes, using the x and y values from each as inputs
+function getManhattanDistance(firstX, firstY, secondX, secondY){
+    return (Math.max(firstX, secondX) - Math.min(firstX, secondX)) + (Math.max(firstY, secondY) - Math.min(firstY, secondY))
+}
 
-function getNeighbors(current){
-    neighbors = [];
-
-    //neighbor below
-    let neighborBelow = new tile(current.x, parseInt(current.y)+1, current.x, current.y);
-    if(!obstacles.includes(neighborBelow.id)){
-        console.log("NOT OBSTACLE");
-        if(isOnGrid(neighborBelow.x, neighborBelow.y) == true){
-            console.log("NOT OUTSIDE GRID");
-            console.log("isOnGrid for", neighborBelow.id, isOnGrid(neighborBelow.x, neighborBelow.y))
-        console.log("Pushing neighbor:", neighborBelow.id)
-        neighbors.push(neighborBelow);
-        }
+//function that returns all valid neighbors for a node, including their g, h and f scores
+function getNeighbors(current, objectiveObj){
+    let neighbors = [];
+    //get neighbor top
+    let neighborTop = new Node(current.x, current.y-1, current.x, current.y, current.gScore+1, getManhattanDistance(current.x, current.y-1, objectiveObj.x, objectiveObj.y));
+    if(testNeighbor(neighborTop) == 1){
+        neighbors.push(neighborTop);
     }
 
-
-    //neighbor above
-    let neighborAbove = new tile(current.x, parseInt(current.y)-1, current.x, current.y);
-    if(!obstacles.includes(neighborAbove.id)){
-        console.log("NOT OBSTACLE");
-        if(isOnGrid(neighborAbove.x, neighborAbove.y) == true){
-            console.log("NOT OUTSIDE GRID");
-        console.log("Pushing neighbor:", neighborAbove.id)
-        neighbors.push(neighborAbove);
-    }
+    //get neighbor botton
+    let neighborBottom = new Node(current.x, current.y+1, current.x, current.y, current.gScore+1, getManhattanDistance(current.x, current.y+1, objectiveObj.x, objectiveObj.y));
+    if(testNeighbor(neighborBottom) == 1){
+        neighbors.push(neighborBottom);
     }
 
-    //neighbor to the right
-    let neighborRight = new tile(parseInt(current.x)+1, current.y, current.x, current.y);
-    if(!obstacles.includes(neighborRight.id)){
-        console.log("NOT OBSTACLE");
-        if(isOnGrid(neighborRight.x, neighborRight.y) == true){
-            console.log("NOT OUTSIDE GRID");
-        console.log("Pushing neighbor:", neighborRight.id)
+    //get neighbor right
+    let neighborRight = new Node(current.x+1, current.y, current.x, current.y, current.gScore+1, getManhattanDistance(current.x+1, current.y, objectiveObj.x, objectiveObj.y));
+    if(testNeighbor(neighborRight) == 1){
         neighbors.push(neighborRight);
-        }
     }
 
-    //neighbor to the left
-    let neighborLeft = new tile(parseInt(current.x)-1, current.y, current.x, current.y);
-    if(!obstacles.includes(neighborLeft.id)){
-        console.log("NOT OBSTACLE");
-        if(isOnGrid(neighborLeft.x, neighborLeft.y) == true){
-            console.log("NOT OUTSIDE GRID");
-        console.log("Pushing neighbor:", neighborLeft.id)
+    //get neighbor left
+    let neighborLeft = new Node(current.x-1, current.y, current.x, current.y, current.gScore+1, getManhattanDistance(current.x-1, current.y, objectiveObj.x, objectiveObj.y));
+    if(testNeighbor(neighborLeft) == 1){
         neighbors.push(neighborLeft);
-        }
     }
 
-    neighborBelow = undefined;
-    neighborAbove = undefined;
-    neighborRight = undefined;
-    neighborLeft = undefined;
-
+    return neighbors;
 }
 
-function isOnGrid(x, y){
-    console.log("IS ON GRID INPUT X =", x);
-    console.log("IS ON GRID INPUT Y =", y);
+//function that tests if a neighbor is valid, both for if it is inside the grid and if it is an obstacle
+function testNeighbor(neighbor){
 
-    if( x > 0 && x < 9 && y > 0 && y < 9){
-        return true;
-    }
-    else{
-        return false;
-    }
-}
-
-//will return only valid neighbors
-function testNeighbors(){
-    let tempLength = neighbors.length
-    let neighborsToSplice = [];
-    for(let i=0; i < tempLength; i++){
-        console.log("loop=", i)
-        console.log(neighbors[i].x)
-        //is neighbor is obstacle or outside the grid
-
-        if(obstacles.includes(neighbors[i].id) || neighbors[i].x > 8 || neighbors[i].x <= 0 || neighbors[i].y > 8 || neighbors[i].y <= 0){
-            console.log("splice")
-        //    neighbors.splice(neighbors.indexOf(neighbors[i]));
-              neighborsToSplice.push(i);
-        }
-    }
-    //splice
-    console.log(neighborsToSplice)
-    for(let l = 0; l < neighborsToSplice.length; l++){
-        console.log("spliceLOOP", l);
-        if(l == 0){
-            neighbors.splice(neighborsToSplice[l], 1);
+    //test if neighbor is inside the grid
+    if(neighbor.x < 9 && neighbor.x > 0 && neighbor.y < 9 && neighbor.y > 0){
+        //test if neighbor is obstacle
+        if(obstacles.includes(neighbor.id)){
+            return 0;
         }
         else{
-            neighbors.splice(neighborsToSplice[l - l - 1], 1);
+            return 1;
         }
     }
-}
-
-//will return the manhattan distance between two nodes
-function manhattanDistance(node1, node2){
-    return (Math.max(parseInt(node1.x), parseInt(node2.x)) - Math.min(parseInt(node1.x), parseInt(node2.x))) + (Math.max(parseInt(node1.y), parseInt(node2.y)) - Math.min(parseInt(node1.y), parseInt(node2.y)))
+    else{
+        return 0;
+    }
 }
