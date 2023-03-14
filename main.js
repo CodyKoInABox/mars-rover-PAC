@@ -192,9 +192,14 @@ function aStar(){
     //add the start node to open
     open.push(startObj);
 
+    let i = 0;
+    while(open.length > 0 && i < 500){
 
-    while(open.length > 0){
-
+        //if objective can't be reached in 500 tries
+        if(i == 499){
+            console.log("UNREACHABLE")
+        }
+        
         //find node in the open set with the lowest f score
         current = open[0];
         for(let i = 1; i < open.length; i++){
@@ -252,7 +257,8 @@ function aStar(){
                 }
             }
         }
-
+        console.log(i);
+        i++;
     }
 }
 
