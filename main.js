@@ -1,6 +1,7 @@
 // TODO LIST
-// translate the comments ?
-// add more coments
+// translate the comments (?)
+// add more comments
+// organize everything
 
 //set a const for the mapContainer (mapContainer = full 8x8 grid)
 const mapContainer = document.querySelector(".mapContainer");
