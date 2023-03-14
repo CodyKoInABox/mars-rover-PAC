@@ -2,6 +2,7 @@
 // translate the comments (?)
 // add more comments
 // organize everything
+// make the open set a heap
 
 //set a const for the mapContainer (mapContainer = full 8x8 grid)
 const mapContainer = document.querySelector(".mapContainer");
