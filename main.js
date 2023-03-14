@@ -197,7 +197,7 @@ function aStar(){
 
         //if objective can't be reached in 500 tries
         if(i == 499){
-            console.log("UNREACHABLE")
+            window.alert("Nao existem caminhos disponiveis.");
         }
         
         //find node in the open set with the lowest f score
@@ -213,14 +213,12 @@ function aStar(){
         closed.push(current);
 
         if(current.id == objective){
-            console.log("SUCCESS! OBJECTIVE FOUND!!!");
             path = retracePath(startObj, closed[closed.length-1]);
             drawPath(path);
             return;
         }
 
-        
-        console.log("open length =", open.length, "    ", "closed length =", closed.length);
+    
 
         let neighbors = getNeighbors(current, objectiveObj);
         
@@ -242,22 +240,18 @@ function aStar(){
                 //if neighbor is NOT in the open set, add it to it
                 //looks like this is the broken part
                 let currentNeighbor = neighbors[j];
-                console.log("current neighbor for open test = ", currentNeighbor);
                 
-                console.log("current element id=", currentNeighbor.id);
-                console.log(open.some(open => open.id == currentNeighbor.id))
+                
+                
+                
 
-                if(open.some(open => open.id == currentNeighbor.id) == true){
-                    console.log("OPEN INCLUDES CURRENT NEIGHBOR");
+                if(open.some(open => open.id == currentNeighbor.id) == true){  
                 }
-                else{
-                    
-                    console.log("OPEN DOES NOT INCLUDE CURRENT NEIGHBOR");
+                else{  
                     open.push(currentNeighbor);
                 }
             }
         }
-        console.log(i);
         i++;
     }
 }
