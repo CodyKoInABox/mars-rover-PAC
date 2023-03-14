@@ -24,11 +24,21 @@ mapContainer.addEventListener('contextmenu', e => e.preventDefault());
 mapContainer.addEventListener('mousedown', e => {
     //call the mapClick function and pass the ID of the tile that was clicked
     mapClick(e.target.id);
+    changeStatsColors(e);
 })
 
 mapContainer.addEventListener('mouseover', e =>{
     document.getElementById("currentTile").innerHTML = "(" + e.target.id.match(/\d/g)[0] + ", " + e.target.id.match(/\d/g)[1] + ")";
     document.getElementById("subtitle").innerHTML = "(X, Y)";
+    changeStatsColors(e);
+})
+
+mapContainer.addEventListener('mouseout', () =>{
+    document.getElementById("currentTile").innerHTML = "&zwnj;";
+    document.getElementById("subtitle").innerHTML = "&zwnj;";
+})
+
+function changeStatsColors(e){
     if(e.target.id == start){
         document.getElementById("currentTile").style.color = "#ffa9f8";
     }
@@ -44,12 +54,7 @@ mapContainer.addEventListener('mouseover', e =>{
     else{
         document.getElementById("currentTile").style.color = "white";
     }
-})
-
-mapContainer.addEventListener('mouseout', () =>{
-    document.getElementById("currentTile").innerHTML = "&zwnj;";
-    document.getElementById("subtitle").innerHTML = "&zwnj;";
-})
+}
 
 //maybe change this to: left mouse = add / right mouse = remove (?)
 //this is just a "main" function for the grid, it organizes the calling of other functions to draw and erase the start, objective and obstacles
