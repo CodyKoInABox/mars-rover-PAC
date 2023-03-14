@@ -26,6 +26,30 @@ mapContainer.addEventListener('mousedown', e => {
     mapClick(e.target.id);
 })
 
+mapContainer.addEventListener('mouseover', e =>{
+    document.getElementById("currentTile").innerHTML = "(" + e.target.id.match(/\d/g)[0] + ", " + e.target.id.match(/\d/g)[1] + ")";
+    document.getElementById("subtitle").innerHTML = "(X, Y)";
+    if(e.target.id == start){
+        document.getElementById("currentTile").style.color = "#ffa9f8";
+    }
+    else if(e.target.id == objective){
+        document.getElementById("currentTile").style.color = "#7dff7d";
+    }
+    else if(obstacles.includes(e.target.id)){
+        document.getElementById("currentTile").style.color = "#ff7d7d";
+    }
+    else if(globalPath.includes(e.target.id)){
+        document.getElementById("currentTile").style.color = "aqua";
+    }
+    else{
+        document.getElementById("currentTile").style.color = "white";
+    }
+})
+
+mapContainer.addEventListener('mouseout', () =>{
+    document.getElementById("currentTile").innerHTML = "&zwnj;";
+    document.getElementById("subtitle").innerHTML = "&zwnj;";
+})
 
 //maybe change this to: left mouse = add / right mouse = remove (?)
 //this is just a "main" function for the grid, it organizes the calling of other functions to draw and erase the start, objective and obstacles
@@ -79,6 +103,8 @@ function defineObjective(tileID){
     objective = tileID;
     //log that an objective was created and it's ID
     console.log("New Objective =", objective);
+    //change the HTML text to display the objective
+    document.getElementById("objective").innerHTML = "Ponto final: (" + objective.match(/\d/g)[0] + ", " + objective.match(/\d/g)[1] + ")";
 }
 
 //function that removes the objective
@@ -89,6 +115,8 @@ function undefineObjective(){
     objective = undefined;
     //log that the objective was removed
     console.log("Objective Removed");
+    //change the HTML text to stop displaying the objective
+    document.getElementById("objective").innerHTML = "Ponto final: "
 }
 
 //function that adds obstacles
@@ -99,6 +127,11 @@ function defineObstacles(tileID){
     obstacles.push(tileID);
     //log that a new obstacle was created and it's ID
     console.log("New Obstacle =", obstacles[obstacles.length-1]);
+    //change the HTML text to display all current obstacles
+    document.getElementById("obstacles").innerHTML = "Obstaculos: ";
+    for(let i = 0; i < obstacles.length; i++){
+        document.getElementById("obstacles").innerHTML += "  (" + obstacles[i].match(/\d/g)[0] + ", " + obstacles[i].match(/\d/g)[1] + ") ";
+}
 }
 
 //function that removes obstacles
@@ -110,6 +143,11 @@ function undefineObstacles(tileID){
     obstacles.splice(obstacles.indexOf(tileID), 1);
     //log that an obstacle was removed
     console.log("Obstacle Removed!")
+    //change the HTML text to display all current obstacles
+    document.getElementById("obstacles").innerHTML = "Obstaculos: ";
+        for(let i = 0; i < obstacles.length; i++){
+                document.getElementById("obstacles").innerHTML += "  (" + obstacles[i].match(/\d/g)[0] + ", " + obstacles[i].match(/\d/g)[1] + ") ";
+        }
 }
 
 //function that adds a start
@@ -130,6 +168,8 @@ function defineStart(tileID){
     start = tileID;
     //log that a start was created, and it's ID
     console.log("New Start =", start);
+    //change the HTML text to display the start
+    document.getElementById("start").innerHTML = "Ponto inicial: (" + start.match(/\d/g)[0] + ", " + start.match(/\d/g)[1] + ")";
 }
 
 //function that removes the start
@@ -140,6 +180,8 @@ function undefineStart(tileID){
     start = undefined;
     //log that the start was removed
     console.log("Start Removed");
+    //change the HTML text to stop showing the start
+    document.getElementById("start").innerHTML = "Ponto inicial: "
 }
 
 //constructor for the Node object
@@ -309,6 +351,8 @@ function testNeighbor(neighbor){
     }
 }
 
+let globalPath = [];
+
 function retracePath(startNode, endNode){
     let path = [];
 
@@ -321,6 +365,7 @@ function retracePath(startNode, endNode){
         currentNode = currentNode.parent;  
     }
 
+    globalPath = path;
     return path;
 }
 
