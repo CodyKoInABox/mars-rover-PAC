@@ -108,7 +108,14 @@ function defineObjective(tileID){
      }
      //after removing (or not) whatever was on the way, run the code:
      //get the clicked tile and make it green as it is now the objective
-    document.getElementById(tileID).style.background = "#7dff7d";
+     if(showImages == true){
+        document.getElementById(tileID).style.backgroundImage = "url(assets/flagTile.png)";
+        document.getElementById(tileID).style.backgroundSize = "100%";
+        document.getElementById(tileID).style.transform = "rotate(0deg)";
+    }
+    else{
+        document.getElementById(tileID).style.background = "#7dff7d";
+    }
     //set the objective variable to the clicked tile's ID
     objective = tileID;
     //log that an objective was created and it's ID
@@ -132,7 +139,15 @@ function undefineObjective(){
 //function that adds obstacles
 function defineObstacles(tileID){
     //get the selected tile and make it red as it is now an obstacle
-    document.getElementById(tileID).style.background = "#ff7d7d";
+    
+    if(showImages == true){
+        document.getElementById(tileID).style.backgroundImage = "url(assets/rockTile.png)";
+        document.getElementById(tileID).style.backgroundSize = "100%";
+        document.getElementById(tileID).style.transform = "rotate(0deg)";
+    }
+    else{
+        document.getElementById(tileID).style.background = "#ff7d7d";
+    }
     //push the ID of the new obstacle to the obstacles array
     obstacles.push(tileID);
     //log that a new obstacle was created and it's ID
@@ -173,10 +188,14 @@ function defineStart(tileID){
     }
     //after removing (or not) whatever was on the way, run the code:
     //get the clicked tile and make it pink as it is now the start
-    document.getElementById(tileID).style.background = "#ffa9f8";
     if(showImages == true){
         document.getElementById(tileID).style.backgroundImage = "url(assets/roverTile.png)";
         document.getElementById(tileID).style.backgroundSize = "100%";
+        document.getElementById(tileID).style.transform = "rotate(0deg)";
+
+    }
+    else{
+        document.getElementById(tileID).style.background = "#ffa9f8";
     }
     //set the start variable to the clicked tile's ID
     start = tileID;
