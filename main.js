@@ -16,6 +16,9 @@ let start;
 //obstacles is an array with all obstacles ID
 let obstacles = [];
 
+//bool that controls if images are shown or not
+let showImages = false;
+
 
 
 //stop right mouse click from opening the browser's context menu when clicking inside the grid
@@ -171,6 +174,10 @@ function defineStart(tileID){
     //after removing (or not) whatever was on the way, run the code:
     //get the clicked tile and make it pink as it is now the start
     document.getElementById(tileID).style.background = "#ffa9f8";
+    if(showImages == true){
+        document.getElementById(tileID).style.backgroundImage = "url(assets/roverTile.png)";
+        document.getElementById(tileID).style.backgroundSize = "100%";
+    }
     //set the start variable to the clicked tile's ID
     start = tileID;
     //log that a start was created, and it's ID
@@ -194,7 +201,7 @@ function undefineStart(tileID){
 //constructor for the Node object
 //REMEMBER TO ALWAYS PASS A GSCORE AND HSCORE WHEN CREATING AN OBJECT
 class Node {
-    constructor(x, y, camefromX, cameFromY, gScore, hScore, parent) {
+    constructor(x, y, camefromX, cameFromY, gScore, hScore, parent, parentCameFrom) {
         this.x = x;
         this.y = y;
         this.id = "x" + x + "y" + y;
@@ -205,6 +212,7 @@ class Node {
         this.hScore = hScore;
         this.fScore = gScore + hScore;
         this.parent = parent;
+        this.parentCameFrom = parentCameFrom;
     }
 }
 
@@ -314,25 +322,25 @@ function getManhattanDistance(firstX, firstY, secondX, secondY){
 function getNeighbors(current, objectiveObj){
     let neighbors = [];
     //get neighbor top
-    let neighborTop = new Node(current.x, current.y-1, current.x, current.y, current.gScore+1, getManhattanDistance(current.x, current.y-1, objectiveObj.x, objectiveObj.y), current);
+    let neighborTop = new Node(current.x, current.y-1, current.x, current.y, current.gScore+1, getManhattanDistance(current.x, current.y-1, objectiveObj.x, objectiveObj.y), current, "bottom");
     if(testNeighbor(neighborTop) == 1){
         neighbors.push(neighborTop);
     }
 
     //get neighbor botton
-    let neighborBottom = new Node(current.x, current.y+1, current.x, current.y, current.gScore+1, getManhattanDistance(current.x, current.y+1, objectiveObj.x, objectiveObj.y), current);
+    let neighborBottom = new Node(current.x, current.y+1, current.x, current.y, current.gScore+1, getManhattanDistance(current.x, current.y+1, objectiveObj.x, objectiveObj.y), current, "top");
     if(testNeighbor(neighborBottom) == 1){
         neighbors.push(neighborBottom);
     }
 
     //get neighbor right
-    let neighborRight = new Node(current.x+1, current.y, current.x, current.y, current.gScore+1, getManhattanDistance(current.x+1, current.y, objectiveObj.x, objectiveObj.y), current);
+    let neighborRight = new Node(current.x+1, current.y, current.x, current.y, current.gScore+1, getManhattanDistance(current.x+1, current.y, objectiveObj.x, objectiveObj.y), current, "left");
     if(testNeighbor(neighborRight) == 1){
         neighbors.push(neighborRight);
     }
 
     //get neighbor left
-    let neighborLeft = new Node(current.x-1, current.y, current.x, current.y, current.gScore+1, getManhattanDistance(current.x-1, current.y, objectiveObj.x, objectiveObj.y), current);
+    let neighborLeft = new Node(current.x-1, current.y, current.x, current.y, current.gScore+1, getManhattanDistance(current.x-1, current.y, objectiveObj.x, objectiveObj.y), current, "right");
     if(testNeighbor(neighborLeft) == 1){
         neighbors.push(neighborLeft);
     }
@@ -360,30 +368,104 @@ function testNeighbor(neighbor){
 
 let globalPath = [];
 let oldPath = [];
+let directionsPath = [];
 
 function retracePath(startNode, endNode){
     let path = [];
+    directionsPath = [];
+    globalPath = [];
 
     let currentNode = endNode;
     
     while(currentNode.id != startNode.id){
         path.push(currentNode.id);
-        currentNode = currentNode.parent;  
+        directionsPath.push(currentNode.parentCameFrom);
+        currentNode = currentNode.parent;
     }
 
     globalPath = path;
     return path;
 }
 
+//function that draws tire tracks on the path
 function drawPath(path){
-    console.log(oldPath)
+    //this part will clean old tracks
     if(oldPath != []){
         for(let j = 1; j < oldPath.length; j++){
             document.getElementById(oldPath[j]).style.background = "white"; 
         }
     }
-    for(let i = 1; i < path.length; i++){
-        document.getElementById(path[i]).style.background = "aqua";
-    }
     oldPath = path;
+
+    
+    //this part will draw the right tracks, following turns and straights
+    //it's based on this chart => https://www.invertexto.com/?n=Q1KPFiJ   (image version => https://imgur.com/a/S6y4fxE)
+    for(let i = path.length - 1; i > 0; i--){
+        if(showImages == true){
+        let nextDirection;
+        switch(directionsPath[i-1]){
+            case "bottom": nextDirection = "top";
+                break;
+            case "top": nextDirection = "bottom";
+                break;
+            case "right": nextDirection = "left";
+                break;
+            case "left": nextDirection = "right";
+                break;
+        }
+
+        let currentDirection = directionsPath[i] + " " + nextDirection;
+
+        //track 0deg
+        if(currentDirection == "bottom bottom" || currentDirection == "bottom top" || currentDirection == "top bottom" || currentDirection == "top top"){
+            document.getElementById(path[i]).style.backgroundImage = "url(assets/trackTile.png)";
+            document.getElementById(path[i]).style.transform = "rotate(0deg)";
+            document.getElementById(path[i]).style.backgroundSize = "cover";
+        }
+        //track 90deg
+        else if(currentDirection == "right left" || currentDirection == "right right" || currentDirection == "left left" || currentDirection == "left right"){
+            document.getElementById(path[i]).style.backgroundImage = "url(assets/trackTile.png)";
+            document.getElementById(path[i]).style.transform = "rotate(90deg)";
+            document.getElementById(path[i]).style.backgroundSize = "cover";
+        }
+        //turn 0deg
+        else if(currentDirection == "bottom right" || currentDirection == "right bottom"){
+            document.getElementById(path[i]).style.backgroundImage = "url(assets/turnTile.png)";
+            document.getElementById(path[i]).style.transform = "rotate(0deg)";
+            document.getElementById(path[i]).style.backgroundSize = "cover";
+        }
+        //turn 90deg
+        else if(currentDirection == "bottom left" || currentDirection == "left bottom"){
+            document.getElementById(path[i]).style.backgroundImage = "url(assets/turnTile.png)";
+            document.getElementById(path[i]).style.transform = "rotate(90deg)";
+            document.getElementById(path[i]).style.backgroundSize = "cover";
+        }
+        //turn 180deg
+        else if(currentDirection == "top left" || currentDirection == "left top"){
+            document.getElementById(path[i]).style.backgroundImage = "url(assets/turnTile.png)";
+            document.getElementById(path[i]).style.transform = "rotate(180deg)";
+            document.getElementById(path[i]).style.backgroundSize = "cover";
+        }
+        //turn 270deg
+        else if(currentDirection == "top right" || currentDirection == "right top"){
+            document.getElementById(path[i]).style.backgroundImage = "url(assets/turnTile.png)";
+            document.getElementById(path[i]).style.transform = "rotate(270deg)";
+            document.getElementById(path[i]).style.backgroundSize = "cover";
+        }
+        //error
+        else{
+        console.log("ERROR ON", currentDirection);
+        document.getElementById(path[i]).style.background = "aqua";
+        }
+    }
+    else{
+        document.getElementById(path[i]).style.background = "aqua"; 
+    }
+
+    }
+}
+
+//function that controls if images are shown
+function imagesSwitch(){
+    showImages = document.getElementById("imagesSwitch").checked;
 }
