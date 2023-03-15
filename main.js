@@ -359,13 +359,12 @@ function testNeighbor(neighbor){
 }
 
 let globalPath = [];
+let oldPath = [];
 
 function retracePath(startNode, endNode){
     let path = [];
 
     let currentNode = endNode;
-
-    
     
     while(currentNode.id != startNode.id){
         path.push(currentNode.id);
@@ -377,7 +376,14 @@ function retracePath(startNode, endNode){
 }
 
 function drawPath(path){
+    console.log(oldPath)
+    if(oldPath != []){
+        for(let j = 1; j < oldPath.length; j++){
+            document.getElementById(oldPath[j]).style.background = "white"; 
+        }
+    }
     for(let i = 1; i < path.length; i++){
         document.getElementById(path[i]).style.background = "aqua";
     }
+    oldPath = path;
 }
