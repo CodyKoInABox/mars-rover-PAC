@@ -4,6 +4,10 @@
 // organize everything
 // make the open set a heap
 
+// to whoever is reading this:
+// the code is very messy and lacking some comments but I believe in you, good luck =)
+// it's also not really optimized, but i'll fix that later
+
 //set a const for the mapContainer (mapContainer = full 8x8 grid)
 const mapContainer = document.querySelector(".mapContainer");
 
@@ -138,16 +142,7 @@ function undefineObjective(){
 
 //function that adds obstacles
 function defineObstacles(tileID){
-    //get the selected tile and make it red as it is now an obstacle
-    
-    if(showImages == true){
-        document.getElementById(tileID).style.backgroundImage = "url(assets/rockTile.png)";
-        document.getElementById(tileID).style.backgroundSize = "100%";
-        document.getElementById(tileID).style.transform = "rotate(0deg)";
-    }
-    else{
-        document.getElementById(tileID).style.background = "#ff7d7d";
-    }
+
     //push the ID of the new obstacle to the obstacles array
     obstacles.push(tileID);
     //log that a new obstacle was created and it's ID
@@ -157,6 +152,18 @@ function defineObstacles(tileID){
     for(let i = 0; i < obstacles.length; i++){
         document.getElementById("obstacles").innerHTML += "  (" + obstacles[i].match(/\d/g)[0] + ", " + obstacles[i].match(/\d/g)[1] + ") ";
 }
+    //get the selected tile and make it red as it is now an obstacle
+    
+    if(showImages == true){
+        document.getElementById(tileID).style.backgroundImage = "url(assets/rockTile.png)";
+        document.getElementById(tileID).style.backgroundSize = "100%";
+        document.getElementById(tileID).style.transform = "rotate(0deg)";
+
+        rockImage();
+    }
+    else{
+        document.getElementById(tileID).style.background = "#ff7d7d";
+    }
 }
 
 //function that removes obstacles
@@ -173,6 +180,8 @@ function undefineObstacles(tileID){
         for(let i = 0; i < obstacles.length; i++){
                 document.getElementById("obstacles").innerHTML += "  (" + obstacles[i].match(/\d/g)[0] + ", " + obstacles[i].match(/\d/g)[1] + ") ";
         }
+
+        rockImage();
 }
 
 //function that adds a start
@@ -243,7 +252,6 @@ function buttonClick(){
     aStar();
 
 }
-
 
 //A* pathfinding algorithm
 function aStar(){
@@ -367,6 +375,60 @@ function getNeighbors(current, objectiveObj){
     return neighbors;
 }
 
+//function that returns all valid and invalid neighbors (i should probably join the two functions into one but...)
+function getAllNeighbors(current, objectiveObj){
+    let neighbors = [];
+    //get neighbor top
+    let neighborTop = new Node(current.x, current.y-1, current.x, current.y, current.gScore+1, getManhattanDistance(current.x, current.y-1, objectiveObj.x, objectiveObj.y), current, "bottom");
+    if(testNeighbor(neighborTop) == 1){
+        neighborTop.valid = true;
+        neighbors.push(neighborTop);
+    }
+    else{
+        neighborTop.valid = false
+        neighbors.push(neighborTop);
+    }
+    
+
+    //get neighbor botton
+    let neighborBottom = new Node(current.x, current.y+1, current.x, current.y, current.gScore+1, getManhattanDistance(current.x, current.y+1, objectiveObj.x, objectiveObj.y), current, "top");
+    if(testNeighbor(neighborBottom) == 1){
+        neighborBottom.valid = true;
+        neighbors.push(neighborBottom);
+    }
+    else{
+        neighborBottom.valid = false;
+        neighbors.push(neighborBottom);
+    }
+    
+
+    //get neighbor right
+    let neighborRight = new Node(current.x+1, current.y, current.x, current.y, current.gScore+1, getManhattanDistance(current.x+1, current.y, objectiveObj.x, objectiveObj.y), current, "left");
+    if(testNeighbor(neighborRight) == 1){
+        neighborRight.valid = true;
+        neighbors.push(neighborRight);
+    }
+    else{
+        neighborRight.valid = false;
+        neighbors.push(neighborRight);
+    }
+    
+
+    //get neighbor left
+    let neighborLeft = new Node(current.x-1, current.y, current.x, current.y, current.gScore+1, getManhattanDistance(current.x-1, current.y, objectiveObj.x, objectiveObj.y), current, "right");
+    if(testNeighbor(neighborLeft) == 1){
+        neighborLeft.valid = true;
+        neighbors.push(neighborLeft);
+    }
+    else{
+        neighborLeft.valid = false;
+        neighbors.push(neighborLeft);
+    }
+    
+
+    return neighbors;
+}
+
 //function that tests if a neighbor is valid, both for if it is inside the grid and if it is an obstacle
 function testNeighbor(neighbor){
 
@@ -484,7 +546,63 @@ function drawPath(path){
     }
 }
 
+// TODO LIST 2
+// SAVE THIS IS BROWSER'S CACHE
+
 //function that controls if images are shown
 function imagesSwitch(){
     showImages = document.getElementById("imagesSwitch").checked;
+}
+
+function rockImage(){
+
+    for(let i = 0; i < obstacles.length; i++){
+        console.log("obstacle=", obstacles[i])
+        let currentObstacle = new Node(parseInt(obstacles[i].match(/\d/g)[0]), parseInt(obstacles[i].match(/\d/g)[1]));
+        let objectiveObjTemp = new Node(parseInt(objective.match(/\d/g)[0]), parseInt(objective.match(/\d/g)[1]));
+        let neighbors = []
+        neighbors = getAllNeighbors(currentObstacle, objectiveObjTemp);
+        console.log(neighbors);
+        let neighborAmount = 0;
+        let currentObstacleID = obstacles[i];
+        for(let j = 0; j < neighbors.length; j++){
+            
+            if(neighbors[j].valid == false){
+                neighborAmount++;
+            }
+            
+        }
+        console.log(neighborAmount);
+
+        //THIS IS WORKING, JUST NEED TO FIX THE ROTATION
+
+        switch(neighborAmount){
+            case 0:
+                document.getElementById(currentObstacleID).style.backgroundImage = "url(assets/rock0.png)";
+                document.getElementById(currentObstacleID).style.backgroundSize = "100%";
+                document.getElementById(currentObstacleID).style.transform = "rotate(0deg)";
+                break;
+            case 1:
+                document.getElementById(currentObstacleID).style.backgroundImage = "url(assets/rock1.png)";
+                document.getElementById(currentObstacleID).style.backgroundSize = "100%";
+                document.getElementById(currentObstacleID).style.transform = "rotate(0deg)";
+                break;
+            case 2:
+                document.getElementById(currentObstacleID).style.backgroundImage = "url(assets/rock2.png)";
+                document.getElementById(currentObstacleID).style.backgroundSize = "100%";
+                document.getElementById(currentObstacleID).style.transform = "rotate(0deg)";
+                break;
+            case 3:
+                document.getElementById(currentObstacleID).style.backgroundImage = "url(assets/rock3.png)";
+                document.getElementById(currentObstacleID).style.backgroundSize = "100%";
+                document.getElementById(currentObstacleID).style.transform = "rotate(0deg)";
+                break;
+            case 4:
+                document.getElementById(currentObstacleID).style.backgroundImage = "url(assets/rock4.png)";
+                document.getElementById(currentObstacleID).style.backgroundSize = "100%";
+                document.getElementById(currentObstacleID).style.transform = "rotate(0deg)";
+                break;
+        }
+        
+    }
 }
