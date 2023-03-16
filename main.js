@@ -565,16 +565,27 @@ function rockImage(){
         console.log(neighbors);
         let neighborAmount = 0;
         let currentObstacleID = obstacles[i];
+        let neighborsDirectionsArray = [];
         for(let j = 0; j < neighbors.length; j++){
             
             if(neighbors[j].valid == false){
                 neighborAmount++;
+                neighborsDirectionsArray.push(neighbors[j].parentCameFrom)
             }
             
         }
         console.log(neighborAmount);
+        
+
+        let neighborsDirections = neighborsDirectionsArray.join(" ");
+        console.log(neighborsDirections)
 
         //THIS IS WORKING, JUST NEED TO FIX THE ROTATION
+        //neighbors.parentCameFrom is opposite
+        //so is neighbors.parentCameFrom == bottom it means that the rock should connect to something that's on top of it
+        //need to finish switch cases for all types of images
+        //create new images, example: rock2 should be different is connections are top-bottom or left-right compared to top-right for example
+        //one should be shaped like an L (the one that already exists) and the other should be shaped like an I
 
         switch(neighborAmount){
             case 0:
@@ -585,22 +596,36 @@ function rockImage(){
             case 1:
                 document.getElementById(currentObstacleID).style.backgroundImage = "url(assets/rock1.png)";
                 document.getElementById(currentObstacleID).style.backgroundSize = "100%";
-                document.getElementById(currentObstacleID).style.transform = "rotate(0deg)";
+                switch(neighborsDirections){
+                    //connect to top
+                    case "bottom": document.getElementById(currentObstacleID).style.transform = "rotate(90deg)";
+                        break;
+                    //connect to bottom
+                    case "top": document.getElementById(currentObstacleID).style.transform = "rotate(270deg)";
+                        break;
+                    //connect to right
+                    case "left": document.getElementById(currentObstacleID).style.transform = "rotate(180deg)";
+                        break;
+                    //connect to left
+                    case "right": document.getElementById(currentObstacleID).style.transform = "rotate(0deg)";
+                        break;
+                }
                 break;
             case 2:
                 document.getElementById(currentObstacleID).style.backgroundImage = "url(assets/rock2.png)";
                 document.getElementById(currentObstacleID).style.backgroundSize = "100%";
-                document.getElementById(currentObstacleID).style.transform = "rotate(0deg)";
+                switch(neighborsDirections){
+                }
                 break;
             case 3:
                 document.getElementById(currentObstacleID).style.backgroundImage = "url(assets/rock3.png)";
                 document.getElementById(currentObstacleID).style.backgroundSize = "100%";
-                document.getElementById(currentObstacleID).style.transform = "rotate(0deg)";
+                switch(neighborsDirections){}
                 break;
             case 4:
                 document.getElementById(currentObstacleID).style.backgroundImage = "url(assets/rock4.png)";
                 document.getElementById(currentObstacleID).style.backgroundSize = "100%";
-                document.getElementById(currentObstacleID).style.transform = "rotate(0deg)";
+                switch(neighborsDirections){}
                 break;
         }
         
