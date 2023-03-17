@@ -603,7 +603,6 @@ function updateSwitch(){
 function rockImage(){
 
     for(let i = 0; i < obstacles.length; i++){
-        console.log("obstacle=", obstacles[i])
         let currentObstacle = new Node(parseInt(obstacles[i].match(/\d/g)[0]), parseInt(obstacles[i].match(/\d/g)[1]));
         let objectiveObjTemp = new Node(parseInt(objective.match(/\d/g)[0]), parseInt(objective.match(/\d/g)[1]));
         let neighbors = []
@@ -620,11 +619,9 @@ function rockImage(){
             }
             
         }
-        console.log(neighborAmount);
         
 
         let neighborsDirections = neighborsDirectionsArray.join(" ");
-        console.log(neighborsDirections)
 
         //THIS IS WORKING, JUST NEED TO FIX THE ROTATION
         //neighbors.parentCameFrom is opposite
@@ -662,7 +659,7 @@ function rockImage(){
                 document.getElementById(currentObstacleID).style.backgroundImage = "url(assets/rock2.png)";
                 document.getElementById(currentObstacleID).style.backgroundSize = "100%";
                 document.getElementById(currentObstacleID).style.transform = "rotate(0deg)";
-                console.log(neighborsDirections)
+                
                 if(neighborsDirections == "bottom left" || neighborsDirections == "left bottom"){
                     document.getElementById(currentObstacleID).style.transform = "rotate(90deg)";
                 }
@@ -686,13 +683,13 @@ function rockImage(){
                 document.getElementById(currentObstacleID).style.backgroundSize = "100%";
                 document.getElementById(currentObstacleID).style.transform = "rotate(0deg)";
                 if(neighborsDirectionsArray.includes("bottom") && neighborsDirectionsArray.includes("right") && neighborsDirectionsArray.includes("left")){
-                    document.getElementById(currentObstacleID).style.transform = "rotate(90deg)"; console.log("90deg")
+                    document.getElementById(currentObstacleID).style.transform = "rotate(90deg)";
                 }
                 else if(neighborsDirectionsArray.includes("bottom") && neighborsDirectionsArray.includes("left") && neighborsDirectionsArray.includes("top")){
-                    document.getElementById(currentObstacleID).style.transform = "rotate(180deg)"; console.log("180deg")
+                    document.getElementById(currentObstacleID).style.transform = "rotate(180deg)";
                 }
                 else if(neighborsDirectionsArray.includes("top") && neighborsDirectionsArray.includes("left") && neighborsDirectionsArray.includes("right")){
-                    document.getElementById(currentObstacleID).style.transform = "rotate(270deg)"; console.log("270deg")
+                    document.getElementById(currentObstacleID).style.transform = "rotate(270deg)";
                 }
                 break;
             case 4:
