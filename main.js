@@ -159,9 +159,8 @@ function defineObstacles(tileID){
         document.getElementById(tileID).style.backgroundSize = "100%";
         document.getElementById(tileID).style.transform = "rotate(0deg)";
 
-        if(showImages == true){
             rockImage();
-        }
+        
     }
     else{
         document.getElementById(tileID).style.background = "#ff7d7d";
@@ -182,8 +181,9 @@ function undefineObstacles(tileID){
         for(let i = 0; i < obstacles.length; i++){
                 document.getElementById("obstacles").innerHTML += "  (" + obstacles[i].match(/\d/g)[0] + ", " + obstacles[i].match(/\d/g)[1] + ") ";
         }
-
-        rockImage();
+        if(showImages == true){
+            rockImage();
+        }
 }
 
 //function that adds a start
