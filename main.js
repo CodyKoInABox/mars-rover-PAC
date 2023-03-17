@@ -611,16 +611,43 @@ function rockImage(){
                         break;
                 }
                 break;
+                //case 2 based on this: https://imgur.com/a/auxYnAP
             case 2:
                 document.getElementById(currentObstacleID).style.backgroundImage = "url(assets/rock2.png)";
                 document.getElementById(currentObstacleID).style.backgroundSize = "100%";
-                switch(neighborsDirections){
+                document.getElementById(currentObstacleID).style.transform = "rotate(0deg)";
+                console.log(neighborsDirections)
+                if(neighborsDirections == "bottom left" || neighborsDirections == "left bottom"){
+                    document.getElementById(currentObstacleID).style.transform = "rotate(90deg)";
+                }
+                else if(neighborsDirections == "top left" || neighborsDirections == "left top"){
+                    document.getElementById(currentObstacleID).style.transform = "rotate(180deg)";
+                }
+                else if(neighborsDirections == "top right" || neighborsDirections == "right top"){
+                    document.getElementById(currentObstacleID).style.transform = "rotate(270deg)";
+                }
+                else if(neighborsDirections == "right left" || neighborsDirections == "left right"){
+                    document.getElementById(currentObstacleID).style.backgroundImage = "url(assets/rock22.png)";
+                }
+                else if(neighborsDirections == "top bottom" || neighborsDirections == "bottom top"){
+                    document.getElementById(currentObstacleID).style.backgroundImage = "url(assets/rock22.png)";
+                    document.getElementById(currentObstacleID).style.transform = "rotate(90deg)";
                 }
                 break;
+                //case 3based on this: https://imgur.com/a/zXxYy3z
             case 3:
                 document.getElementById(currentObstacleID).style.backgroundImage = "url(assets/rock3.png)";
                 document.getElementById(currentObstacleID).style.backgroundSize = "100%";
-                switch(neighborsDirections){}
+                document.getElementById(currentObstacleID).style.transform = "rotate(0deg)";
+                if(neighborsDirectionsArray.includes("bottom") && neighborsDirectionsArray.includes("right") && neighborsDirectionsArray.includes("left")){
+                    document.getElementById(currentObstacleID).style.transform = "rotate(90deg)"; console.log("90deg")
+                }
+                else if(neighborsDirectionsArray.includes("bottom") && neighborsDirectionsArray.includes("left") && neighborsDirectionsArray.includes("top")){
+                    document.getElementById(currentObstacleID).style.transform = "rotate(180deg)"; console.log("180deg")
+                }
+                else if(neighborsDirectionsArray.includes("top") && neighborsDirectionsArray.includes("left") && neighborsDirectionsArray.includes("right")){
+                    document.getElementById(currentObstacleID).style.transform = "rotate(270deg)"; console.log("270deg")
+                }
                 break;
             case 4:
                 document.getElementById(currentObstacleID).style.backgroundImage = "url(assets/rock4.png)";
