@@ -159,7 +159,9 @@ function defineObstacles(tileID){
         document.getElementById(tileID).style.backgroundSize = "100%";
         document.getElementById(tileID).style.transform = "rotate(0deg)";
 
-        rockImage();
+        if(showImages == true){
+            rockImage();
+        }
     }
     else{
         document.getElementById(tileID).style.background = "#ff7d7d";
