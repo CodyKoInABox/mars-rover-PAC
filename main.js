@@ -23,6 +23,8 @@ let obstacles = [];
 //bool that controls if images are shown or not
 let showImages = false;
 
+let firstClick = true;
+
 updateSwitch()
 
 //stop right mouse click from opening the browser's context menu when clicking inside the grid
@@ -250,9 +252,22 @@ class Node {
 
 //temporary function for the HTML button click, i'm just using this to test and figure out stuff, mainly about the A* pathfinder algorithm
 function buttonClick(){
+    let temp = true;
+    if(firstClick == false){
+        if(window.confirm("Recomenda-se atualizar a pagina antes de usa-la novamente! (F5)") == true){
+            window.location.reload();
+            return;
+        }
+        else{
+            temp == false;
+        }
+    }
 
     aStar();
 
+    if(temp == true){
+        firstClick = false;
+    }
 }
 
 //A* pathfinding algorithm
