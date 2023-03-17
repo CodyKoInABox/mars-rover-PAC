@@ -249,7 +249,6 @@ class Node {
 }
 
 
-
 //temporary function for the HTML button click, i'm just using this to test and figure out stuff, mainly about the A* pathfinder algorithm
 function buttonClick(){
     let temp = true;
