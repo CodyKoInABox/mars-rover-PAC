@@ -607,7 +607,6 @@ function rockImage(){
         let objectiveObjTemp = new Node(parseInt(objective.match(/\d/g)[0]), parseInt(objective.match(/\d/g)[1]));
         let neighbors = []
         neighbors = getAllNeighbors(currentObstacle, objectiveObjTemp);
-        console.log(neighbors);
         let neighborAmount = 0;
         let currentObstacleID = obstacles[i];
         let neighborsDirectionsArray = [];
