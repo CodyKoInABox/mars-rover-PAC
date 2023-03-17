@@ -23,7 +23,7 @@ let obstacles = [];
 //bool that controls if images are shown or not
 let showImages = false;
 
-
+updateSwitch()
 
 //stop right mouse click from opening the browser's context menu when clicking inside the grid
 mapContainer.addEventListener('contextmenu', e => e.preventDefault());
@@ -552,6 +552,24 @@ function drawPath(path){
 //function that controls if images are shown
 function imagesSwitch(){
     showImages = document.getElementById("imagesSwitch").checked;
+    if(showImages == true){
+        localStorage.setItem("showImages", "true");
+    }
+    else{
+        localStorage.setItem("showImages", "false");
+    }
+}
+
+function updateSwitch(){
+    console.log("hello!!", localStorage.getItem("showImages"))
+    if(localStorage.getItem("showImages") == "true"){
+        showImages = true;
+        document.getElementById("imagesSwitch").checked = true;
+    }
+    else{
+        showImages = false;
+        document.getElementById("imagesSwitch").checked = false;
+    }
 }
 
 function rockImage(){
