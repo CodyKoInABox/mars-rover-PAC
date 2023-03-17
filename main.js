@@ -11,6 +11,7 @@
 //set a const for the mapContainer (mapContainer = full 8x8 grid)
 const mapContainer = document.querySelector(".mapContainer");
 
+//set a const for the little text under the map
 const clickText = document.getElementById("clickText");
 
 //set global variables
@@ -307,7 +308,6 @@ function aStar(){
 
     let i = 0;
     while(open.length > 0 && i < 500){
-
         //if objective can't be reached in 500 tries
         if(i == 499){
             window.alert("Nao existem caminhos disponiveis.");
@@ -590,7 +590,6 @@ function imagesSwitch(){
 }
 
 function updateSwitch(){
-    console.log("hello!!", localStorage.getItem("showImages"))
     if(localStorage.getItem("showImages") == "true"){
         showImages = true;
         document.getElementById("imagesSwitch").checked = true;
