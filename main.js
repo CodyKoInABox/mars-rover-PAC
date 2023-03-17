@@ -11,6 +11,8 @@
 //set a const for the mapContainer (mapContainer = full 8x8 grid)
 const mapContainer = document.querySelector(".mapContainer");
 
+const clickText = document.getElementById("clickText");
+
 //set global variables
 
 //objective is a string with the objective ID
@@ -67,6 +69,8 @@ function changeStatsColors(e){
     }
 }
 
+clickText.innerHTML = 'Clique para adicionar um ponto inicial <span style="color:#ffa9f8">&#9724</span>';
+
 //maybe change this to: left mouse = add / right mouse = remove (?)
 //this is just a "main" function for the grid, it organizes the calling of other functions to draw and erase the start, objective and obstacles
 function mapClick(tileID){
@@ -76,18 +80,27 @@ function mapClick(tileID){
     //if there's no start, the click will define a start
     if(start == undefined){
         defineStart(tileID);
+        if(objective == undefined){
+            clickText.innerHTML = 'Clique para adicionar um objetivo <span style="color:#7dff7d">&#9724</span>'
+    }
+    else{
+        clickText.innerHTML = 'Clique para adicionar um obstaculo <span style="color:#ff7d7d">&#9724</span>'
+    }
     }
     //else, if there's already a start and you click it, the click will remove the start
     else if(start == tileID){
         undefineStart(tileID);
+        clickText.innerHTML = 'Clique para adicionar um ponto inicial <span style="color:#ffa9f8">&#9724</span>'
     }
     //else, if there's no objective, the click will define a start
     else if(objective == undefined){
         defineObjective(tileID);
+        clickText.innerHTML = 'Clique para adicionar um obstaculo <span style="color:#ff7d7d">&#9724</span>'
     }
     //else, if there's already an objective and you click it, the click will remove the objective
     else if(objective == tileID){
         undefineObjective();
+        clickText.innerHTML = 'Clique para adicionar um objetivo <span style="color:#7dff7d">&#9724</span>'
     }
     //else, if you click an obstacle, remove the obstacle (check next else for explanation on obstacles)
     else if (obstacles.includes(tileID)){

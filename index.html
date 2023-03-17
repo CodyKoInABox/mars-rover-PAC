@@ -11,6 +11,15 @@
 </head>
 <body>
 
+    <div class="headerContainer">
+        <a class="headerTitle" href="https://github.com/CodyKoInABox/mars-rover-PAC" target="_blank">PAC | MARS ROVER</a>
+        <a class="headerMaps">// Mapa 8x8</a>
+        <a class="headerMaps">// Mapa 16x16</a>
+        <a class="headerMaps">// Mapa 32x32</a>
+        <a class="headerMaps">// Mapa 64x64</a>
+        <a class="headerMaps">(por enquanto so tem o 8x8)</a>
+    </div>
+
     
     <div class="switchContainer">
         <p class="switchText">IMAGENS:</p>
@@ -20,6 +29,8 @@
           </label>
     </div>
 
+    <div class="mapContainerContainer">  
+            
     <div class="mapContainer">
 <div class="mapTile" id="x1y1"> </div>
 <div class="mapTile" id="x2y1"> </div>
@@ -86,6 +97,8 @@
 <div class="mapTile" id="x7y8"> </div>
 <div class="mapTile" id="x8y8"> </div>
     </div>
+    <p id="clickText">Clique para adicionar um obstaculo &#9724</p>
+</div>
     <div class="statsContainer">
         <p id="subtitle" class="stats">&zwnj;</p>
         <p id="currentTile" class="stats">&zwnj;</p>
@@ -97,7 +110,6 @@
         <button class="button" onclick="buttonClick()">Procurar Caminho!</button>
     </div>
     <p class="aviso">Esse botao roda a inteligencia artificial que procura o caminho mais curto</p>
-    <h4 class="aviso">SEMPRE APERTE F5 ANTES DE USAR O SITE NOVAMENTE</h4>
     <p class="aviso">Primeiro clique = Posicao Inicial (rosa)</p>
     <p class="aviso">Segundo clique = Posicao Final (verde)</p>
     <p class="aviso">Demais cliques = Obstaculos (vermelho)</p>

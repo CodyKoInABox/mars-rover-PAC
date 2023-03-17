@@ -1,12 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
+
+
 body{
     margin: 0;
     padding: 0;
     background-color: hsl(231, 14%, 10%);
     text-align: center;
 }
+.mapContainerContainer{
+    width: fit-content;
+    margin: auto;
+}
+#clickText{
+    font-family: arial;
+    color: white;
+    text-align: left;
+    margin-left: 5px;
+    margin-top: 2px;
+    font-size: small;
+}
 .mapContainer{
     margin: auto;
-    margin-top: 50px;
+    margin-top: 20px;
     display: grid;
     width: fit-content;
     grid-template-rows: 50px 50px 50px 50px 50px 50px 50px 50px;
@@ -48,21 +63,25 @@ a:hover{
     font-family: arial;
 }
 #subtitle{
-    margin-bottom: -10px;
+    margin-bottom: -15px;
+    margin-top: -5px;
 }
 #currentTile{
     font-size: large;
 }
 #start{
     color: #ffa9f8;
+    margin-top: -7px;
 }
 #objective{
     color: #7dff7d;
+    margin-top: -7px;
 }
 #obstacles{
     color: #ff7d7d;
     width: 400px;
     margin: auto;
+    margin-top: -7px;
 }
 .switch {
     position: relative;
@@ -115,5 +134,46 @@ input:checked + .slider:before {
     font-weight: 600;
     color: white;
     margin-bottom: 1px;
-    margin-top: 15px;
+    margin-top: 110px;
+}
+.headerContainer{
+    position: absolute;
+    width: 100%;
+    height: 80px;
+    top: 0;
+    display: flex;
+    
+}
+.headerTitle{
+    float: left;
+    margin-top: 5px;
+    margin-left: 15px;
+    color: white;
+    font-family: 'Oswald', arial;
+    font-size: 40px;
+    text-decoration: none;
+    font-weight: 700;
+    
+}
+.headerTitle:hover{
+    color: white;
+    cursor: pointer;
+}
+.headerMaps{
+    color: white;
+    font-family: 'Oswald', arial;
+    font-weight: 400;
+    font-size: 25px;
+    margin-left: 150px;
+    margin-top: auto;
+    margin-bottom: auto;
+    transition: transform .1s;
+    transition-timing-function: ease-in-out;
+}
+.headerMaps:hover{
+    color: white;
+    transform: scale(1.05);
+    cursor: pointer;
+    transition: transform .1s;
+    transition-timing-function: ease-in-out;
 }
