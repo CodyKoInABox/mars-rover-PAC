@@ -19,6 +19,12 @@ const clickText = document.getElementById("clickText");
 //set a const for the main button
 const button = document.querySelector("button");
 
+//set some const's for the things that go around the button
+const svgLine = document.querySelector(".glowLine");
+const svgBlur = document.querySelector(".glowBlur");
+const svgLine2 = document.querySelector(".glowLine2");
+const svgBlur2 = document.querySelector(".glowBlur2");
+
 //set global variables
 
 //objective is a string with the objective ID
@@ -52,7 +58,7 @@ mapContainer.addEventListener('mousedown', e => {
 })
 
 mapContainer.addEventListener('mouseover', e =>{
-    document.getElementById("currentTile").innerHTML = "(" + e.target.id.match(/\d/g)[0] + ", " + e.target.id.match(/\d/g)[1] + ")";
+    document.getElementById("currentTile").innerHTML = "(" + getX(e.target.id) + ", " + getY(e.target.id )+ ")";
     document.getElementById("subtitle").innerHTML = "(X, Y)";
     changeStatsColors(e);
 })
@@ -151,7 +157,7 @@ function defineObjective(tileID){
     //log that an objective was created and it's ID
     console.log("New Objective =", objective);
     //change the HTML text to display the objective
-    document.getElementById("objective").innerHTML = "Ponto final: (" + objective.match(/\d/g)[0] + ", " + objective.match(/\d/g)[1] + ")";
+    document.getElementById("objective").innerHTML = "Ponto final: (" + getX(objective) + ", " + getY(objective) + ")";
 
     isButtonPressable = true;
     button.disabled = false;
@@ -160,7 +166,7 @@ function defineObjective(tileID){
 //function that removes the objective
 function undefineObjective(){
     //get the objective's tile and make it white
-    document.getElementById("x"+objective.match(/\d/g)[0]+"y"+objective.match(/\d/g)[1]).style.background = "white";
+    document.getElementById("x"+getX(objective)+"y"+getY(objective)).style.background = "white";
     //set the objective varible as undefined
     objective = undefined;
     //log that the objective was removed
@@ -182,7 +188,7 @@ function defineObstacles(tileID){
     //change the HTML text to display all current obstacles
     document.getElementById("obstacles").innerHTML = "Obstaculos: ";
     for(let i = 0; i < obstacles.length; i++){
-        document.getElementById("obstacles").innerHTML += "  (" + obstacles[i].match(/\d/g)[0] + ", " + obstacles[i].match(/\d/g)[1] + ") ";
+        document.getElementById("obstacles").innerHTML += "  (" + getX(obstacles[i]) + ", " + getY(obstacles[i]) + ") ";
 }
     //get the selected tile and make it red as it is now an obstacle
     
@@ -211,7 +217,7 @@ function undefineObstacles(tileID){
     //change the HTML text to display all current obstacles
     document.getElementById("obstacles").innerHTML = "Obstaculos: ";
         for(let i = 0; i < obstacles.length; i++){
-                document.getElementById("obstacles").innerHTML += "  (" + obstacles[i].match(/\d/g)[0] + ", " + obstacles[i].match(/\d/g)[1] + ") ";
+                document.getElementById("obstacles").innerHTML += "  (" + getX(obstacles[i]) + ", " + getY(obstacles[i]) + ") ";
         }
         if(showImages == true){
             rockImage();
@@ -245,7 +251,7 @@ function defineStart(tileID){
     //log that a start was created, and it's ID
     console.log("New Start =", start);
     //change the HTML text to display the start
-    document.getElementById("start").innerHTML = "Ponto inicial: (" + start.match(/\d/g)[0] + ", " + start.match(/\d/g)[1] + ")";
+    document.getElementById("start").innerHTML = "Ponto inicial: (" + getX(start) + ", " + getY(start) + ")";
 }
 
 //function that removes the start
@@ -307,10 +313,10 @@ function aStar(){
     let current = new Node;
 
     //create a node object for the objective position 
-    let objectiveObj = new Node(parseInt(objective.match(/\d/g)[0]), parseInt(objective.match(/\d/g)[1]));
+    let objectiveObj = new Node(parseInt(getX(objective)), parseInt(getY(objective)));
 
     //create a node object for the start position
-    let startObj = new Node(parseInt(start.match(/\d/g)[0]), parseInt(start.match(/\d/g)[1]), undefined, undefined, 0, getManhattanDistance(parseInt(start.match(/\d/g)[0]), parseInt(start.match(/\d/g)[1]), objectiveObj.x, objectiveObj.y));
+    let startObj = new Node(parseInt(getX(start)), parseInt(getY(start)), undefined, undefined, 0, getManhattanDistance(parseInt(getX(start)), parseInt(getY(start)), objectiveObj.x, objectiveObj.y));
     
 
     //create the open set
@@ -324,9 +330,9 @@ function aStar(){
 
     let i = 0;
     while(open.length > 0 && i < mapSize*mapSize*100){
-        console.log(i)
         //if objective can't be reached in mapSize*mapSize*10 - 1 tries
         if(i == mapSize*mapSize*100-1){
+            changeButtonColorAfterClick(0);
             window.alert("Nao existem caminhos disponiveis.");
         }
         
@@ -620,8 +626,8 @@ function updateSwitch(){
 function rockImage(){
 
     for(let i = 0; i < obstacles.length; i++){
-        let currentObstacle = new Node(parseInt(obstacles[i].match(/\d/g)[0]), parseInt(obstacles[i].match(/\d/g)[1]));
-        let objectiveObjTemp = new Node(parseInt(objective.match(/\d/g)[0]), parseInt(objective.match(/\d/g)[1]));
+        let currentObstacle = new Node(parseInt(getX(obstacles[i])), parseInt(getY(obstacles[i])));
+        let objectiveObjTemp = new Node(parseInt(getX(objective)), parseInt(getY(objective)));
         let neighbors = []
         neighbors = getAllNeighbors(currentObstacle, objectiveObjTemp);
         let neighborAmount = 0;
@@ -720,10 +726,6 @@ function rockImage(){
 
 
 //make the things around the button spin around it when the button is hovered
-const svgLine = document.querySelector(".glowLine");
-const svgBlur = document.querySelector(".glowBlur");
-const svgLine2 = document.querySelector(".glowLine2");
-const svgBlur2 = document.querySelector(".glowBlur2");
 
 let spinAnimation;
 
@@ -751,9 +753,29 @@ button.addEventListener('mouseout' , () => {
     button.style.cursor = "";
 });
 
+button.addEventListener('mouseup', () => {
+    changeButtonColorAfterClick(1);
+})
+
+//input 1 for sucess(blue) //input 0 for error (red)
+function changeButtonColorAfterClick(input){
+    if(input == 1){
+        svgLine.style.stroke = "aqua";
+        svgBlur.style.stroke = "aqua";
+        svgLine2.style.stroke = "aqua";
+        svgBlur2.style.stroke = "aqua";
+    }
+    else if(input == 0){
+        svgLine.style.stroke = "#ff7d7d";
+        svgBlur.style.stroke = "#ff7d7d";
+        svgLine2.style.stroke = "#ff7d7d";
+        svgBlur2.style.stroke = "#ff7d7d";
+    }
+}
+
 
 const spingSvg = (time) => {
-    const speed = 0.05;
+    const speed = 0.035;
     svgLine.style.strokeDashoffset = time * speed;
     svgBlur.style.strokeDashoffset = time * speed;
     svgLine2.style.strokeDashoffset = time * speed + 50;
@@ -775,5 +797,33 @@ function getMapSize(){
     }
     else{
         return 8;
+    }
+}
+
+
+//function that returns the X axis value of an ID
+function getX(id){
+    let temp = [];
+    for(let i = 0; i < id.length; i++){
+        if(!isNaN(id[i])){
+            temp.push(id[i]);
+        }
+        if(id[i] == "y"){
+            return parseInt(temp.join(''));
+        }
+    }
+}
+
+//function that returns the Y axis value of an ID
+function getY(id){
+    let temp = [];
+    let reverseString = id.split("").reverse().join("");
+    for(let i = 0; i < reverseString.length; i++){
+        if(!isNaN(reverseString[i])){
+            temp.push(reverseString[i]);
+        }
+        if(reverseString[i] == "y"){
+            return parseInt(temp.join("").split("").reverse().join(""));
+        }
     }
 }

@@ -228,6 +228,7 @@ input:checked + .slider:before {
     stroke-width: 5px;
     stroke-dasharray: 20px 80px;
     transition: opacity 250ms;
+    transition: stroke 50ms;
 }
 .glowLine{
     stroke: #7dff7d;
