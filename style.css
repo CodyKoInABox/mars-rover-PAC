@@ -37,20 +37,6 @@ body{
 .mapTile:hover{
     filter: brightness(85%);
 }
-.buttonContainer{
-    display: flex;
-    justify-content: center;
-    margin-top: 75px;
-}
-.button{
-    font-weight: bolder;
-    font-size: large;
-    height: 50px;
-    margin-top: -40px;
-}
-.button:hover{
-    cursor: pointer;
-}
 .aviso{
     font-family: Arial;
     color: white;
@@ -196,4 +182,53 @@ input:checked + .slider:before {
     cursor: pointer;
     transition: transform .1s;
     transition-timing-function: ease-in-out;
+}
+.buttonContainer{
+    display: flex;
+    justify-content: center;
+    margin-top: 75px;
+}
+.button{
+    font-weight: bolder;
+    font-size: large;
+    height: 45px;
+    margin-top: -40px;
+    border: transparent;
+    border-radius: 5px;
+}
+.glow{
+    position: relative;
+}
+.glowContainer{
+    pointer-events: none;
+    position: absolute;
+    inset: -50px;
+    width: calc(100% + 100px);
+    height: calc(100% + 100px);
+    /* opacity: 0; */
+}
+.glowBlur,.glowLine{
+    width: calc(100% - 100px);
+    height: calc(100% - 100px);
+    x: 50px;
+    y: 50px;
+    rx: 5px;
+    fill: transparent;
+    stroke: black;
+    stroke-width: 5px;
+    stroke-dasharray: 20px 80px;
+    transition: opacity 250ms;
+}
+.glowLine{
+    stroke: #7dff7d;
+    stroke-width: 3px;
+}
+.glowBlur{
+    filter: blur(6px);
+    stroke: #7dff7d;
+    stroke-width: 3px;
+}
+.glowLine2, .glowBlur2{
+    stroke: #ffa9f8;
+    stroke-dasharray: 20px 80px;
 }

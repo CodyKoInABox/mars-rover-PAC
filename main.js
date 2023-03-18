@@ -16,6 +16,9 @@ const mapContainer = document.querySelector(".mapContainer");
 //set a const for the little text under the map
 const clickText = document.getElementById("clickText");
 
+//set a const for the main button
+const button = document.querySelector("button");
+
 //set global variables
 
 //objective is a string with the objective ID
@@ -29,6 +32,9 @@ let obstacles = [];
 let showImages = false;
 
 let firstClick = true;
+
+let isButtonPressable = false;
+button.disabled = true;
 
 updateSwitch()
 
@@ -144,6 +150,9 @@ function defineObjective(tileID){
     console.log("New Objective =", objective);
     //change the HTML text to display the objective
     document.getElementById("objective").innerHTML = "Ponto final: (" + objective.match(/\d/g)[0] + ", " + objective.match(/\d/g)[1] + ")";
+
+    isButtonPressable = true;
+    button.disabled = false;
 }
 
 //function that removes the objective
@@ -156,6 +165,9 @@ function undefineObjective(){
     console.log("Objective Removed");
     //change the HTML text to stop displaying the objective
     document.getElementById("objective").innerHTML = "Ponto final: "
+
+    isButtonPressable = false;
+    button.disabled = true;
 }
 
 //function that adds obstacles
@@ -702,3 +714,47 @@ function rockImage(){
         
     }
 }
+
+
+//make the things around the button spin around it when the button is hovered
+const svgLine = document.querySelector(".glowLine");
+const svgBlur = document.querySelector(".glowBlur");
+const svgLine2 = document.querySelector(".glowLine2");
+const svgBlur2 = document.querySelector(".glowBlur2");
+
+let spinAnimation;
+
+svgLine.style.opacity = 0;
+svgBlur.style.opacity = 0;
+svgLine2.style.opacity = 0;
+svgBlur2.style.opacity = 0;
+
+
+button.addEventListener('mouseover' , () => {
+    if(isButtonPressable == true){
+        svgLine.style.opacity = 1;
+        svgBlur.style.opacity = 1;
+        svgLine2.style.opacity = 1;
+        svgBlur2.style.opacity = 1;
+        button.style.cursor = "pointer";
+    }
+});
+
+button.addEventListener('mouseout' , () => {
+    svgLine.style.opacity = 0;
+    svgBlur.style.opacity = 0;
+    svgLine2.style.opacity = 0;
+    svgBlur2.style.opacity = 0;
+    button.style.cursor = "";
+});
+
+
+const spingSvg = (time) => {
+    const speed = 0.05;
+    svgLine.style.strokeDashoffset = time * speed;
+    svgBlur.style.strokeDashoffset = time * speed;
+    svgLine2.style.strokeDashoffset = time * speed + 50;
+    svgBlur2.style.strokeDashoffset = time * speed + 50;
+    spinAnimation = requestAnimationFrame(spingSvg);
+}
+spinAnimation = requestAnimationFrame(spingSvg);
