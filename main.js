@@ -38,6 +38,8 @@ button.disabled = true;
 
 updateSwitch()
 
+let mapSize = getMapSize();
+
 //stop right mouse click from opening the browser's context menu when clicking inside the grid
 mapContainer.addEventListener('contextmenu', e => e.preventDefault());
 
@@ -321,9 +323,9 @@ function aStar(){
     open.push(startObj);
 
     let i = 0;
-    while(open.length > 0 && i < 500){
-        //if objective can't be reached in 500 tries
-        if(i == 499){
+    while(open.length > 0 && i < mapSize*mapSize*10){
+        //if objective can't be reached in mapSize*mapSize*10 - 1 tries
+        if(i == mapSize*mapSize*10-1){
             window.alert("Nao existem caminhos disponiveis.");
         }
         
@@ -758,3 +760,19 @@ const spingSvg = (time) => {
     spinAnimation = requestAnimationFrame(spingSvg);
 }
 spinAnimation = requestAnimationFrame(spingSvg);
+
+
+function getMapSize(){
+    if(document.URL.includes("16")){
+        return 16;
+    }
+    else if(document.URL.includes("32")){
+        return 32;
+    }
+    else if(document.URL.includes("64")){
+        return 64;
+    }
+    else{
+        return 8;
+    }
+}
