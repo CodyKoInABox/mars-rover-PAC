@@ -141,19 +141,24 @@ input:checked + .slider:before {
     width: 100%;
     height: 80px;
     top: 0;
+    background-color: #0f1014;   
+}
+.headerMapsContainer{
     display: flex;
-    
+    justify-content: space-evenly;
+    gap: 15px;
+    height: 100%;
 }
 .headerTitle{
     float: left;
     margin-top: 5px;
     margin-left: 15px;
+    margin-right: 15px;
     color: white;
     font-family: 'Oswald', arial;
     font-size: 40px;
     text-decoration: none;
     font-weight: 700;
-    
 }
 .headerTitle:hover{
     color: white;
@@ -164,11 +169,26 @@ input:checked + .slider:before {
     font-family: 'Oswald', arial;
     font-weight: 400;
     font-size: 25px;
-    margin-left: 150px;
     margin-top: auto;
     margin-bottom: auto;
     transition: transform .1s;
     transition-timing-function: ease-in-out;
+}
+@media (max-width: 910px) {
+    .headerMaps{
+        font-size: 20px;
+    }
+    .headerTitle{
+        font-size: 30px;
+    }
+}
+@media (max-width: 735px) {
+    .headerMaps{
+        font-size: 15px;
+    }
+    .headerTitle{
+        font-size: 20px;
+    }
 }
 .headerMaps:hover{
     color: white;
