@@ -10,7 +10,7 @@
 // the code is very messy and lacking some comments but I believe in you, good luck =)
 // it's also not really optimized, but i'll fix that later
 
-//set a const for the mapContainer (mapContainer = full 8x8 grid)
+//set a const for the mapContainer (mapContainer = full grid)
 const mapContainer = document.querySelector(".mapContainer");
 
 //set a const for the little text under the map
@@ -323,9 +323,10 @@ function aStar(){
     open.push(startObj);
 
     let i = 0;
-    while(open.length > 0 && i < mapSize*mapSize*10){
+    while(open.length > 0 && i < mapSize*mapSize*100){
+        console.log(i)
         //if objective can't be reached in mapSize*mapSize*10 - 1 tries
-        if(i == mapSize*mapSize*10-1){
+        if(i == mapSize*mapSize*100-1){
             window.alert("Nao existem caminhos disponiveis.");
         }
         
@@ -478,7 +479,7 @@ function getAllNeighbors(current, objectiveObj){
 function testNeighbor(neighbor){
 
     //test if neighbor is inside the grid
-    if(neighbor.x < 9 && neighbor.x > 0 && neighbor.y < 9 && neighbor.y > 0){
+    if(neighbor.x < mapSize+1 && neighbor.x > 0 && neighbor.y < mapSize+1 && neighbor.y > 0){
         //test if neighbor is obstacle
         if(obstacles.includes(neighbor.id)){
             return 0;

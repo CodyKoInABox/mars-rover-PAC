@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAC | Mars Rover</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/marsIcon.png">
+    <script defer src="main.js"></script>
+</head>
+<body>
+    
+    <div class="headerContainer">
+        <a class="headerTitle" href="https://github.com/CodyKoInABox/mars-rover-PAC" target="_blank">PAC | MARS ROVER</a>
+        <div class="headerMapsContainer">
+        <a class="headerMaps" href="index.html">// Mapa 8x8</a>
+        <a class="headerMaps" href="16x16.html">// Mapa 16x16</a>
+        <a class="headerMaps">// Mapa 32x32</a>
+        <a class="headerMaps">// Mapa 64x64</a>
+    </div>
+    </div>
+
+    
+    <div class="switchContainer">
+        <p class="switchText">IMAGENS:</p>
+        <label class="switch">
+            <input type="checkbox" id="imagesSwitch" onchange="imagesSwitch()">
+            <span class="slider round"></span>
+          </label>
+    </div>
+
+    <div class="mapContainerContainer">  
+            
+    <div class="mapContainer mapContainer16x16">
+        <div class="mapTile" id="x1y1"> </div>
+        <div class="mapTile" id="x2y1"> </div>
+        <div class="mapTile" id="x3y1"> </div>
+        <div class="mapTile" id="x4y1"> </div>
+        <div class="mapTile" id="x5y1"> </div>
+        <div class="mapTile" id="x6y1"> </div>
+        <div class="mapTile" id="x7y1"> </div>
+        <div class="mapTile" id="x8y1"> </div>
+        <div class="mapTile" id="x9y1"> </div>
+        <div class="mapTile" id="x10y1"> </div>
+        <div class="mapTile" id="x11y1"> </div>
+        <div class="mapTile" id="x12y1"> </div>
+        <div class="mapTile" id="x13y1"> </div>
+        <div class="mapTile" id="x14y1"> </div>
+        <div class="mapTile" id="x15y1"> </div>
+        <div class="mapTile" id="x16y1"> </div>
+        <div class="mapTile" id="x1y2"> </div>
+        <div class="mapTile" id="x2y2"> </div>
+        <div class="mapTile" id="x3y2"> </div>
+        <div class="mapTile" id="x4y2"> </div>
+        <div class="mapTile" id="x5y2"> </div>
+        <div class="mapTile" id="x6y2"> </div>
+        <div class="mapTile" id="x7y2"> </div>
+        <div class="mapTile" id="x8y2"> </div>
+        <div class="mapTile" id="x9y2"> </div>
+        <div class="mapTile" id="x10y2"> </div>
+        <div class="mapTile" id="x11y2"> </div>
+        <div class="mapTile" id="x12y2"> </div>
+        <div class="mapTile" id="x13y2"> </div>
+        <div class="mapTile" id="x14y2"> </div>
+        <div class="mapTile" id="x15y2"> </div>
+        <div class="mapTile" id="x16y2"> </div>
+        <div class="mapTile" id="x1y3"> </div>
+        <div class="mapTile" id="x2y3"> </div>
+        <div class="mapTile" id="x3y3"> </div>
+        <div class="mapTile" id="x4y3"> </div>
+        <div class="mapTile" id="x5y3"> </div>
+        <div class="mapTile" id="x6y3"> </div>
+        <div class="mapTile" id="x7y3"> </div>
+        <div class="mapTile" id="x8y3"> </div>
+        <div class="mapTile" id="x9y3"> </div>
+        <div class="mapTile" id="x10y3"> </div>
+        <div class="mapTile" id="x11y3"> </div>
+        <div class="mapTile" id="x12y3"> </div>
+        <div class="mapTile" id="x13y3"> </div>
+        <div class="mapTile" id="x14y3"> </div>
+        <div class="mapTile" id="x15y3"> </div>
+        <div class="mapTile" id="x16y3"> </div>
+        <div class="mapTile" id="x1y4"> </div>
+        <div class="mapTile" id="x2y4"> </div>
+        <div class="mapTile" id="x3y4"> </div>
+        <div class="mapTile" id="x4y4"> </div>
+        <div class="mapTile" id="x5y4"> </div>
+        <div class="mapTile" id="x6y4"> </div>
+        <div class="mapTile" id="x7y4"> </div>
+        <div class="mapTile" id="x8y4"> </div>
+        <div class="mapTile" id="x9y4"> </div>
+        <div class="mapTile" id="x10y4"> </div>
+        <div class="mapTile" id="x11y4"> </div>
+        <div class="mapTile" id="x12y4"> </div>
+        <div class="mapTile" id="x13y4"> </div>
+        <div class="mapTile" id="x14y4"> </div>
+        <div class="mapTile" id="x15y4"> </div>
+        <div class="mapTile" id="x16y4"> </div>
+        <div class="mapTile" id="x1y5"> </div>
+        <div class="mapTile" id="x2y5"> </div>
+        <div class="mapTile" id="x3y5"> </div>
+        <div class="mapTile" id="x4y5"> </div>
+        <div class="mapTile" id="x5y5"> </div>
+        <div class="mapTile" id="x6y5"> </div>
+        <div class="mapTile" id="x7y5"> </div>
+        <div class="mapTile" id="x8y5"> </div>
+        <div class="mapTile" id="x9y5"> </div>
+        <div class="mapTile" id="x10y5"> </div>
+        <div class="mapTile" id="x11y5"> </div>
+        <div class="mapTile" id="x12y5"> </div>
+        <div class="mapTile" id="x13y5"> </div>
+        <div class="mapTile" id="x14y5"> </div>
+        <div class="mapTile" id="x15y5"> </div>
+        <div class="mapTile" id="x16y5"> </div>
+        <div class="mapTile" id="x1y6"> </div>
+        <div class="mapTile" id="x2y6"> </div>
+        <div class="mapTile" id="x3y6"> </div>
+        <div class="mapTile" id="x4y6"> </div>
+        <div class="mapTile" id="x5y6"> </div>
+        <div class="mapTile" id="x6y6"> </div>
+        <div class="mapTile" id="x7y6"> </div>
+        <div class="mapTile" id="x8y6"> </div>
+        <div class="mapTile" id="x9y6"> </div>
+        <div class="mapTile" id="x10y6"> </div>
+        <div class="mapTile" id="x11y6"> </div>
+        <div class="mapTile" id="x12y6"> </div>
+        <div class="mapTile" id="x13y6"> </div>
+        <div class="mapTile" id="x14y6"> </div>
+        <div class="mapTile" id="x15y6"> </div>
+        <div class="mapTile" id="x16y6"> </div>
+        <div class="mapTile" id="x1y7"> </div>
+        <div class="mapTile" id="x2y7"> </div>
+        <div class="mapTile" id="x3y7"> </div>
+        <div class="mapTile" id="x4y7"> </div>
+        <div class="mapTile" id="x5y7"> </div>
+        <div class="mapTile" id="x6y7"> </div>
+        <div class="mapTile" id="x7y7"> </div>
+        <div class="mapTile" id="x8y7"> </div>
+        <div class="mapTile" id="x9y7"> </div>
+        <div class="mapTile" id="x10y7"> </div>
+        <div class="mapTile" id="x11y7"> </div>
+        <div class="mapTile" id="x12y7"> </div>
+        <div class="mapTile" id="x13y7"> </div>
+        <div class="mapTile" id="x14y7"> </div>
+        <div class="mapTile" id="x15y7"> </div>
+        <div class="mapTile" id="x16y7"> </div>
+        <div class="mapTile" id="x1y8"> </div>
+        <div class="mapTile" id="x2y8"> </div>
+        <div class="mapTile" id="x3y8"> </div>
+        <div class="mapTile" id="x4y8"> </div>
+        <div class="mapTile" id="x5y8"> </div>
+        <div class="mapTile" id="x6y8"> </div>
+        <div class="mapTile" id="x7y8"> </div>
+        <div class="mapTile" id="x8y8"> </div>
+        <div class="mapTile" id="x9y8"> </div>
+        <div class="mapTile" id="x10y8"> </div>
+        <div class="mapTile" id="x11y8"> </div>
+        <div class="mapTile" id="x12y8"> </div>
+        <div class="mapTile" id="x13y8"> </div>
+        <div class="mapTile" id="x14y8"> </div>
+        <div class="mapTile" id="x15y8"> </div>
+        <div class="mapTile" id="x16y8"> </div>
+        <div class="mapTile" id="x1y9"> </div>
+        <div class="mapTile" id="x2y9"> </div>
+        <div class="mapTile" id="x3y9"> </div>
+        <div class="mapTile" id="x4y9"> </div>
+        <div class="mapTile" id="x5y9"> </div>
+        <div class="mapTile" id="x6y9"> </div>
+        <div class="mapTile" id="x7y9"> </div>
+        <div class="mapTile" id="x8y9"> </div>
+        <div class="mapTile" id="x9y9"> </div>
+        <div class="mapTile" id="x10y9"> </div>
+        <div class="mapTile" id="x11y9"> </div>
+        <div class="mapTile" id="x12y9"> </div>
+        <div class="mapTile" id="x13y9"> </div>
+        <div class="mapTile" id="x14y9"> </div>
+        <div class="mapTile" id="x15y9"> </div>
+        <div class="mapTile" id="x16y9"> </div>
+        <div class="mapTile" id="x1y10"> </div>
+        <div class="mapTile" id="x2y10"> </div>
+        <div class="mapTile" id="x3y10"> </div>
+        <div class="mapTile" id="x4y10"> </div>
+        <div class="mapTile" id="x5y10"> </div>
+        <div class="mapTile" id="x6y10"> </div>
+        <div class="mapTile" id="x7y10"> </div>
+        <div class="mapTile" id="x8y10"> </div>
+        <div class="mapTile" id="x9y10"> </div>
+        <div class="mapTile" id="x10y10"> </div>
+        <div class="mapTile" id="x11y10"> </div>
+        <div class="mapTile" id="x12y10"> </div>
+        <div class="mapTile" id="x13y10"> </div>
+        <div class="mapTile" id="x14y10"> </div>
+        <div class="mapTile" id="x15y10"> </div>
+        <div class="mapTile" id="x16y10"> </div>
+        <div class="mapTile" id="x1y11"> </div>
+        <div class="mapTile" id="x2y11"> </div>
+        <div class="mapTile" id="x3y11"> </div>
+        <div class="mapTile" id="x4y11"> </div>
+        <div class="mapTile" id="x5y11"> </div>
+        <div class="mapTile" id="x6y11"> </div>
+        <div class="mapTile" id="x7y11"> </div>
+        <div class="mapTile" id="x8y11"> </div>
+        <div class="mapTile" id="x9y11"> </div>
+        <div class="mapTile" id="x10y11"> </div>
+        <div class="mapTile" id="x11y11"> </div>
+        <div class="mapTile" id="x12y11"> </div>
+        <div class="mapTile" id="x13y11"> </div>
+        <div class="mapTile" id="x14y11"> </div>
+        <div class="mapTile" id="x15y11"> </div>
+        <div class="mapTile" id="x16y11"> </div>
+        <div class="mapTile" id="x1y12"> </div>
+        <div class="mapTile" id="x2y12"> </div>
+        <div class="mapTile" id="x3y12"> </div>
+        <div class="mapTile" id="x4y12"> </div>
+        <div class="mapTile" id="x5y12"> </div>
+        <div class="mapTile" id="x6y12"> </div>
+        <div class="mapTile" id="x7y12"> </div>
+        <div class="mapTile" id="x8y12"> </div>
+        <div class="mapTile" id="x9y12"> </div>
+        <div class="mapTile" id="x10y12"> </div>
+        <div class="mapTile" id="x11y12"> </div>
+        <div class="mapTile" id="x12y12"> </div>
+        <div class="mapTile" id="x13y12"> </div>
+        <div class="mapTile" id="x14y12"> </div>
+        <div class="mapTile" id="x15y12"> </div>
+        <div class="mapTile" id="x16y12"> </div>
+        <div class="mapTile" id="x1y13"> </div>
+        <div class="mapTile" id="x2y13"> </div>
+        <div class="mapTile" id="x3y13"> </div>
+        <div class="mapTile" id="x4y13"> </div>
+        <div class="mapTile" id="x5y13"> </div>
+        <div class="mapTile" id="x6y13"> </div>
+        <div class="mapTile" id="x7y13"> </div>
+        <div class="mapTile" id="x8y13"> </div>
+        <div class="mapTile" id="x9y13"> </div>
+        <div class="mapTile" id="x10y13"> </div>
+        <div class="mapTile" id="x11y13"> </div>
+        <div class="mapTile" id="x12y13"> </div>
+        <div class="mapTile" id="x13y13"> </div>
+        <div class="mapTile" id="x14y13"> </div>
+        <div class="mapTile" id="x15y13"> </div>
+        <div class="mapTile" id="x16y13"> </div>
+        <div class="mapTile" id="x1y14"> </div>
+        <div class="mapTile" id="x2y14"> </div>
+        <div class="mapTile" id="x3y14"> </div>
+        <div class="mapTile" id="x4y14"> </div>
+        <div class="mapTile" id="x5y14"> </div>
+        <div class="mapTile" id="x6y14"> </div>
+        <div class="mapTile" id="x7y14"> </div>
+        <div class="mapTile" id="x8y14"> </div>
+        <div class="mapTile" id="x9y14"> </div>
+        <div class="mapTile" id="x10y14"> </div>
+        <div class="mapTile" id="x11y14"> </div>
+        <div class="mapTile" id="x12y14"> </div>
+        <div class="mapTile" id="x13y14"> </div>
+        <div class="mapTile" id="x14y14"> </div>
+        <div class="mapTile" id="x15y14"> </div>
+        <div class="mapTile" id="x16y14"> </div>
+        <div class="mapTile" id="x1y15"> </div>
+        <div class="mapTile" id="x2y15"> </div>
+        <div class="mapTile" id="x3y15"> </div>
+        <div class="mapTile" id="x4y15"> </div>
+        <div class="mapTile" id="x5y15"> </div>
+        <div class="mapTile" id="x6y15"> </div>
+        <div class="mapTile" id="x7y15"> </div>
+        <div class="mapTile" id="x8y15"> </div>
+        <div class="mapTile" id="x9y15"> </div>
+        <div class="mapTile" id="x10y15"> </div>
+        <div class="mapTile" id="x11y15"> </div>
+        <div class="mapTile" id="x12y15"> </div>
+        <div class="mapTile" id="x13y15"> </div>
+        <div class="mapTile" id="x14y15"> </div>
+        <div class="mapTile" id="x15y15"> </div>
+        <div class="mapTile" id="x16y15"> </div>
+        <div class="mapTile" id="x1y16"> </div>
+        <div class="mapTile" id="x2y16"> </div>
+        <div class="mapTile" id="x3y16"> </div>
+        <div class="mapTile" id="x4y16"> </div>
+        <div class="mapTile" id="x5y16"> </div>
+        <div class="mapTile" id="x6y16"> </div>
+        <div class="mapTile" id="x7y16"> </div>
+        <div class="mapTile" id="x8y16"> </div>
+        <div class="mapTile" id="x9y16"> </div>
+        <div class="mapTile" id="x10y16"> </div>
+        <div class="mapTile" id="x11y16"> </div>
+        <div class="mapTile" id="x12y16"> </div>
+        <div class="mapTile" id="x13y16"> </div>
+        <div class="mapTile" id="x14y16"> </div>
+        <div class="mapTile" id="x15y16"> </div>
+        <div class="mapTile" id="x16y16"> </div>
+    </div>
+    <p id="clickText">Clique para adicionar um obstaculo &#9724</p>
+</div>
+    <div class="statsContainer">
+        <p id="subtitle" class="stats">&zwnj;</p>
+        <p id="currentTile" class="stats">&zwnj;</p>
+        <p id="start" class="stats">Ponto inicial: </p>
+        <p id="objective" class="stats">Ponto final: </p>
+        <p id="obstacles" class="stats">Obstaculos: </p>
+    </div>
+    <div class="buttonContainer">
+        <button class="button glow" onclick="buttonClick()">
+            Procurar Caminho 
+            <svg class="glowContainer">
+                <rect class="glowBlur" pathLength="100" stroke-linecap="round"></rect>
+                <rect class="glowBlur glowBlur2" pathLength="100" stroke-linecap="round"></rect>
+                <rect class="glowLine" pathLength="100" stroke-linecap="round"></rect>
+                <rect class="glowLine glowLine2" pathLength="100" stroke-linecap="round"></rect>
+            </svg>
+        </button>
+    </div>
+    <p class="aviso">Esse botao roda a inteligencia artificial que procura o caminho mais curto</p>
+    <p class="aviso">O caminho mais curto sera mostrado em azul</p>
+    <a class="aviso" href="https://github.com/CodyKoInABox/mars-rover-PAC" target="_blank">LINK GITHUB</a>
+
+
+</body>
+</html>

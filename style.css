@@ -27,6 +27,14 @@ body{
     grid-template-rows: 50px 50px 50px 50px 50px 50px 50px 50px;
     grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px;
 }
+.mapContainer16x16{
+    margin: auto;
+    margin-top: 20px;
+    display: grid;
+    width: fit-content;
+    grid-template-rows: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
+    grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
+}
 .mapContainer:hover{
     cursor: pointer;
 }
@@ -159,6 +167,7 @@ input:checked + .slider:before {
     margin-bottom: auto;
     transition: transform .1s;
     transition-timing-function: ease-in-out;
+    text-decoration: none;
 }
 @media (max-width: 910px) {
     .headerMaps{
