@@ -280,7 +280,7 @@ function obstaclesTextClamp(){
 function showMoreClick(){
     //if text is hidden
     if(document.getElementById("obstacles").scrollHeight > document.getElementById("obstacles").clientHeight){
-        document.getElementById("obstacles").style.setProperty("--maxLines", "10");
+        document.getElementById("obstacles").style.setProperty("--maxLines", "none");
         document.getElementById("showMore").innerHTML = "Mostrar menos"
     }
     else{
