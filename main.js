@@ -186,7 +186,9 @@ function defineObstacles(tileID){
     //change the HTML text to display all current obstacles
     document.getElementById("obstacles").innerHTML = "Obstaculos: ";
     for(let i = 0; i < obstacles.length; i++){
+        //add obstacle to the obstacles list in the HTML
         document.getElementById("obstacles").innerHTML += "  (" + getX(obstacles[i]) + ", " + getY(obstacles[i]) + ") ";
+        obstaclesTextClamp();
 }
     //get the selected tile and make it red as it is now an obstacle
     
@@ -216,6 +218,7 @@ function undefineObstacles(tileID){
     document.getElementById("obstacles").innerHTML = "Obstaculos: ";
         for(let i = 0; i < obstacles.length; i++){
                 document.getElementById("obstacles").innerHTML += "  (" + getX(obstacles[i]) + ", " + getY(obstacles[i]) + ") ";
+                obstaclesTextClamp();
         }
         if(showImages == true){
             rockImage();
@@ -262,6 +265,28 @@ function undefineStart(tileID){
     console.log("Start Removed");
     //change the HTML text to stop showing the start
     document.getElementById("start").innerHTML = "Ponto inicial: "
+}
+
+function obstaclesTextClamp(){
+    if(document.getElementById("obstacles").scrollHeight > document.getElementById("obstacles").clientHeight){
+        document.getElementById("showMore").style.display = "block";
+    }
+    else{
+        document.getElementById("showMore").style.display = "none";
+        showMoreClick();
+    }
+}
+
+function showMoreClick(){
+    //if text is hidden
+    if(document.getElementById("obstacles").scrollHeight > document.getElementById("obstacles").clientHeight){
+        document.getElementById("obstacles").style.setProperty("--maxLines", "10");
+        document.getElementById("showMore").innerHTML = "Mostrar menos"
+    }
+    else{
+        document.getElementById("obstacles").style.setProperty("--maxLines", "2");
+        document.getElementById("showMore").innerHTML = "Mostrar mais"
+    }
 }
 
 //constructor for the Node object

@@ -88,10 +88,24 @@ a:hover{
     margin-top: -7px;
 }
 #obstacles{
+    --maxLines: 2;
     color: #ff7d7d;
     width: 400px;
     margin: auto;
     margin-top: -7px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--maxLines);
+    overflow: hidden;
+}
+#showMore{
+    font-size: small;
+    display: none;
+    margin-top: 5px;
+    margin-bottom: -5px;
+}
+#showMore:hover{
+    cursor: pointer;
 }
 .switch {
     position: relative;
