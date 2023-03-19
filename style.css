@@ -106,6 +106,7 @@ a:hover{
 }
 #showMore:hover{
     cursor: pointer;
+    text-decoration: underline;
 }
 .switch {
     position: relative;
