@@ -197,7 +197,7 @@ function defineObstacles(tileID){
         document.getElementById(tileID).style.backgroundSize = "100%";
         document.getElementById(tileID).style.transform = "rotate(0deg)";
 
-            rockImage();
+            rockImage(tileID);
         
     }
     else{
@@ -221,7 +221,7 @@ function undefineObstacles(tileID){
                 obstaclesTextClamp();
         }
         if(showImages == true){
-            rockImage();
+            rockImage(tileID);
         }
 }
 
@@ -646,8 +646,9 @@ function updateSwitch(){
     }
 }
 
-function rockImage(){
+function rockImage(tileID){
 
+    
     for(let i = 0; i < obstacles.length; i++){
         let currentObstacle = new Node(parseInt(getX(obstacles[i])), parseInt(getY(obstacles[i])));
         let objectiveObjTemp = new Node(parseInt(getX(objective)), parseInt(getY(objective)));
@@ -667,13 +668,6 @@ function rockImage(){
         
 
         let neighborsDirections = neighborsDirectionsArray.join(" ");
-
-        //THIS IS WORKING, JUST NEED TO FIX THE ROTATION
-        //neighbors.parentCameFrom is opposite
-        //so is neighbors.parentCameFrom == bottom it means that the rock should connect to something that's on top of it
-        //need to finish switch cases for all types of images
-        //create new images, example: rock2 should be different is connections are top-bottom or left-right compared to top-right for example
-        //one should be shaped like an L (the one that already exists) and the other should be shaped like an I
 
         switch(neighborAmount){
             case 0:
