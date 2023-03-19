@@ -3,6 +3,7 @@
 // add more comments
 // organize everything
 // make the open set a heap
+// optmize obstacle images
 
 // to whoever is reading this:
 // the code is very messy and lacking some comments but I believe in you, good luck =)
@@ -648,7 +649,7 @@ function updateSwitch(){
 
 function rockImage(tileID){
 
-    
+
     for(let i = 0; i < obstacles.length; i++){
         let currentObstacle = new Node(parseInt(getX(obstacles[i])), parseInt(getY(obstacles[i])));
         let objectiveObjTemp = new Node(parseInt(getX(objective)), parseInt(getY(objective)));
