@@ -54,13 +54,13 @@ mapContainer.addEventListener('contextmenu', e => e.preventDefault());
 mapContainer.addEventListener('mousedown', e => {
     //call the mapClick function and pass the ID of the tile that was clicked
     mapClick(e.target.id);
-    changeStatsColors(e);
-})
+    changeStatsColors(e.target.id);
+});
 
 mapContainer.addEventListener('mouseover', e =>{
     document.getElementById("currentTile").innerHTML = "(" + getX(e.target.id) + ", " + getY(e.target.id )+ ")";
     document.getElementById("subtitle").innerHTML = "(X, Y)";
-    changeStatsColors(e);
+    changeStatsColors(e.target.id);
 })
 
 mapContainer.addEventListener('mouseout', () =>{
@@ -68,17 +68,17 @@ mapContainer.addEventListener('mouseout', () =>{
     document.getElementById("subtitle").innerHTML = "&zwnj;";
 })
 
-function changeStatsColors(e){
-    if(e.target.id == start){
+function changeStatsColors(id){
+    if(id == start){
         document.getElementById("currentTile").style.color = "#ffa9f8";
     }
-    else if(e.target.id == objective){
+    else if(id == objective){
         document.getElementById("currentTile").style.color = "#7dff7d";
     }
-    else if(obstacles.includes(e.target.id)){
+    else if(obstacles.includes(id)){
         document.getElementById("currentTile").style.color = "#ff7d7d";
     }
-    else if(globalPath.includes(e.target.id)){
+    else if(globalPath.includes(id)){
         document.getElementById("currentTile").style.color = "aqua";
     }
     else{
