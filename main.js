@@ -3,7 +3,7 @@
 // add more comments
 // organize everything
 // make the open set a heap
-// optmize obstacle images
+// optimize obstacle images
 
 // to whoever is reading this:
 // the code is very messy and lacking some comments but I believe in you, good luck =)
